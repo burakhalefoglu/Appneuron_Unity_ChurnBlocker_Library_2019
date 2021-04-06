@@ -7,7 +7,7 @@ namespace Appneuron
 {
     public class DifficultyManager
     {
-        private DifficultySingletonModel difficultySingletonModel = DifficultySingletonModel.Instance;
+        private readonly DifficultySingletonModel difficultySingletonModel = DifficultySingletonModel.Instance;
 
         public void GetDifficultyLevelFromServer(DifficultyModel difficultyModel)
         {
