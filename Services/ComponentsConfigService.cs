@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Appneuron.Services
 {
-   public class ComponentsConfigService
+    public class ComponentsConfigService
     {
         public enum SaveTypePath
         {
@@ -20,7 +20,9 @@ namespace Appneuron.Services
             GameSessionEveryLoginDataModel,
             LevelBaseSessionDataModel,
             GeneralDataModel,
-            BuyingEventDataModel
+            BuyingEventDataModel,
+            TokenDataModel
+
         }
 
         private static readonly string dataPath = Application.persistentDataPath;
@@ -37,7 +39,8 @@ namespace Appneuron.Services
             {SaveTypePath.GameSessionEveryLoginDataModel, dataPath + "/ChurnBlocker/ComponentsData/GameSessionEveryLoginDataModel/"},
             {SaveTypePath.LevelBaseSessionDataModel, dataPath + "/ChurnBlocker/ComponentsData/LevelBaseSessionDataModel/"},
             {SaveTypePath.GeneralDataModel, dataPath + "/ChurnBlocker/ComponentsData/GeneralDataModel/"},
-            {SaveTypePath.BuyingEventDataModel, dataPath + "/ChurnBlocker/ComponentsData/BuyingEventDataModel/"}
+            {SaveTypePath.BuyingEventDataModel, dataPath + "/ChurnBlocker/ComponentsData/BuyingEventDataModel/" },
+            {SaveTypePath.TokenDataModel, dataPath + "/ChurnBlocker/TokenDataModel/"}
         };
 
         public readonly static string AdvEventDataPath = ComponentsData[SaveTypePath.AdvEventDataModel];
@@ -51,6 +54,7 @@ namespace Appneuron.Services
         public readonly static string LevelBaseSessionDataPath = ComponentsData[SaveTypePath.LevelBaseSessionDataModel];
         public readonly static string GeneralDataPath = ComponentsData[SaveTypePath.GeneralDataModel];
         public readonly static string BuyingEventDataPath = ComponentsData[SaveTypePath.BuyingEventDataModel];
+        public readonly static string TokenDataModel = ComponentsData[SaveTypePath.TokenDataModel];
 
 
 
