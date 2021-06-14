@@ -10,7 +10,7 @@
 
 	<ItemGroup>
 	  <Reference Include="UnityEngine">
-	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.25f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Appneuron
+namespace Appneuron.Models
 {
     public sealed class DifficultySingletonModel
     {
