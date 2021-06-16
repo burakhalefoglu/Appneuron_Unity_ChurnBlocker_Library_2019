@@ -6,7 +6,7 @@ namespace Appneuron.Services
 {
     public static class WebApiConfigService
     {
-        public const string AuthWebApiLink = "https://localhost:44324/WebAPI/api/Auth/";
+        public const string AuthWebApiLink = "https://localhost:44375/WebAPI/api/Auth/";
         public const string ClientWebApiLink = "https://localhost:44370/WebAPI/api/";
 
         public const string AdvEventsRequestName = "AdvEvents";
