@@ -21,7 +21,8 @@ namespace Appneuron.Services
             LevelBaseSessionDataModel,
             GeneralDataModel,
             BuyingEventDataModel,
-            TokenDataModel
+            TokenDataModel,
+            DifficultyModel
 
         }
 
@@ -40,7 +41,8 @@ namespace Appneuron.Services
             {SaveTypePath.LevelBaseSessionDataModel, dataPath + "/ChurnBlocker/ComponentsData/LevelBaseSessionDataModel/"},
             {SaveTypePath.GeneralDataModel, dataPath + "/ChurnBlocker/ComponentsData/GeneralDataModel/"},
             {SaveTypePath.BuyingEventDataModel, dataPath + "/ChurnBlocker/ComponentsData/BuyingEventDataModel/" },
-            {SaveTypePath.TokenDataModel, dataPath + "/ChurnBlocker/TokenDataModel/"}
+            {SaveTypePath.TokenDataModel, dataPath + "/ChurnBlocker/TokenDataModel/"},
+            {SaveTypePath.DifficultyModel, dataPath + "/ChurnBlocker/DifficultyModel/"}
         };
 
         public readonly static string AdvEventDataPath = ComponentsData[SaveTypePath.AdvEventDataModel];
@@ -55,12 +57,13 @@ namespace Appneuron.Services
         public readonly static string GeneralDataPath = ComponentsData[SaveTypePath.GeneralDataModel];
         public readonly static string BuyingEventDataPath = ComponentsData[SaveTypePath.BuyingEventDataModel];
         public readonly static string TokenDataModel = ComponentsData[SaveTypePath.TokenDataModel];
+        public readonly static string DifficultyModel = ComponentsData[SaveTypePath.DifficultyModel];
 
 
 
 
 
-        public static void CreateFileVisualDataDirectories()
+        public static void CreateFileLocalDataDirectories()
         {
             foreach (KeyValuePair<SaveTypePath, string> directory in ComponentsData)
             {
@@ -68,7 +71,7 @@ namespace Appneuron.Services
             }
         }
 
-        public static List<string> GetVisualDataFilesName(SaveTypePath fileType)
+        public static List<string> GetSavedDataFilesNames(SaveTypePath fileType)
         {
             DirectoryInfo dir = new DirectoryInfo(ComponentsData[fileType]);
             FileInfo[] info = dir.GetFiles("*" + ".data");

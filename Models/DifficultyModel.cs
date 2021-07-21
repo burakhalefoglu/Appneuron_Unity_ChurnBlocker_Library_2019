@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Appneuron.Models
 {
+    [Serializable]
     public class DifficultyModel
     {
         public int CenterOfDifficultyLevel { get; set; }

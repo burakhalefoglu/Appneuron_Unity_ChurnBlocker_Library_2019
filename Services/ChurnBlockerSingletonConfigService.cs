@@ -12,7 +12,7 @@ namespace Appneuron.Services
     public class ChurnBlockerSingletonConfigService
     {
 
-        private List<string> configList;
+        private Dictionary<string,string> configList;
 
         private static readonly ChurnBlockerSingletonConfigService instance = new ChurnBlockerSingletonConfigService();
 
@@ -36,22 +36,22 @@ namespace Appneuron.Services
 
         private void ReadConfigList()
         {
-            configList = new List<string>();
+            configList = new Dictionary<string,string>();
             JObject appneuronJsonFile = JObject.Parse(File.ReadAllText(Application.streamingAssetsPath + "/ChurnBlocker.json"));
             foreach (JProperty property in appneuronJsonFile.Properties())
             {
-                configList.Add(property.Value.ToString());
+                configList.Add(property.Name,property.Value.ToString());
             }
         }
 
         public string GetProjectID()
         {
-            return configList[0];
+            return configList["ProjectID"];
         }
 
         public string GetCustomerID()
         {
-            return configList[1];
+            return configList["CustomerID"];
         }
     }
 
