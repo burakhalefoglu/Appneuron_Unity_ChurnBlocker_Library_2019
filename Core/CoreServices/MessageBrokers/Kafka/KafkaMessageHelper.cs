@@ -45,7 +45,8 @@ namespace Assets.Appneuron.Core.CoreServices.MessageBrockers.Kafka
 
             var producerConfig = new ProducerConfig
             {
-                BootstrapServers = ApacheKafkaConfigService.BootstrapServers
+                BootstrapServers = ApacheKafkaConfigService.BootstrapServers,
+                Acks = Acks.All
             };
 
             var message = JsonConvert.SerializeObject(messageModel);
