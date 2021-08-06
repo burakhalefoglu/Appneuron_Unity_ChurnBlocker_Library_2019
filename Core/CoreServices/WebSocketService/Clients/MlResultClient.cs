@@ -8,11 +8,15 @@ using WebSocketSharp;
 
 namespace Appneuron.Core.CoreServices.WebSocketService
 {
-    public class WebsocketClient
+    public class MlResultClient
     {
-        public static void ListenServerManager()
+        private static string clientID;
+
+        public static void ListenServerManager(string clientId)
         {
-            var connectedServer = ConnectServerManager("127.0.0.1", 3000);
+            clientID = clientId;
+
+            var connectedServer = ConnectServerManager("127.0.0.1", 3000, clientId);
 
             connectedServer.OnMessage += (sender, e) =>
             {
@@ -25,13 +29,14 @@ namespace Appneuron.Core.CoreServices.WebSocketService
                 connectedServer.Close();
 
                 //TODO: Burada Ml result dışında bağlanacak bir yapı var ise burada eklenmeli!!!
-                var webSocket = ConnectMlResultServer(data.Port, data.Host);
+                var webSocket = ConnectMlResultServer(data.Port, data.Host, clientId);
             };
         }
 
-        private static WebSocket ConnectServerManager(string host, int port)
+        private static WebSocket ConnectServerManager(string host, int port, string clientId)
         {
-            var ws = new WebSocket($"ws://{host}:{port}/ClientBehavior?clientid=" + new Random().Next(123, 999));
+
+            var ws = new WebSocket($"ws://{host}:{port}/MlResultClientBehavior?clientid=" + clientId);
 
             try
             {
@@ -43,15 +48,15 @@ namespace Appneuron.Core.CoreServices.WebSocketService
 
                 Console.WriteLine("Hata: ", exception.Message);
                 Thread.Sleep(60000);
-                ConnectServerManager(host, port);
+                ConnectServerManager(host, port, clientId);
             }
             return ws;
 
         }
 
-        private static WebSocket ConnectMlResultServer(int port, string host)
+        private static WebSocket ConnectMlResultServer(int port, string host, string clientId)
         {
-            var ws = new WebSocket($"ws://{host}:{port}/MlResult?clientid=" + new Random().Next(123, 999));
+            var ws = new WebSocket($"ws://{host}:{port}/MlResult?clientid=" + clientId);
 
             try
             {
@@ -86,7 +91,7 @@ namespace Appneuron.Core.CoreServices.WebSocketService
 
                 Console.WriteLine("Hata: ", exception.Message);
                 Thread.Sleep(5000);
-                ConnectServerManager("127.0.0.1", 3000);
+                ConnectServerManager("127.0.0.1", 3000, clientId);
             }
             return ws;
 
@@ -96,7 +101,7 @@ namespace Appneuron.Core.CoreServices.WebSocketService
         {
             //Server çökünce veya bağlantı kapanınca burası tetikleniyor...
             Console.WriteLine("Connection Closed. Reconnecting...", e.Reason);
-            ListenServerManager();
+            ListenServerManager(clientID);
         }
 
         private static void Ws_OnError(object sender, ErrorEventArgs e)

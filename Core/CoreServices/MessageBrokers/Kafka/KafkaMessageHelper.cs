@@ -38,23 +38,23 @@ namespace Assets.Appneuron.Core.CoreServices.MessageBrockers.Kafka
             if (!result.Success)
                 return new ErrorResult();
 
-            if (PartitionsOfTopicDataModel.partitionModels.Count==0)
+            if (PartitionsOfTopicDataModel.partitionModels.Count == 0)
             {
                 await MessageBrokerAdminHelper.SetPartitionCountAsync();
             }
-
-            var producerConfig = new ProducerConfig
+            try
             {
-                BootstrapServers = ApacheKafkaConfigService.BootstrapServers,
-                Acks = Acks.All
-            };
-
-            var message = JsonConvert.SerializeObject(messageModel);
-            var topicName = typeof(T).Name;
-            using (var p = new ProducerBuilder<Null, string>(producerConfig).Build())
-            {
-                try
+                var producerConfig = new ProducerConfig
                 {
+                    BootstrapServers = ApacheKafkaConfigService.BootstrapServers,
+                    Acks = Acks.All
+                };
+
+                var message = JsonConvert.SerializeObject(messageModel);
+                var topicName = typeof(T).Name;
+                using (var p = new ProducerBuilder<Null, string>(producerConfig).Build())
+                {
+
                     var partitionModel = PartitionsOfTopicDataModel.partitionModels.Find(t => t.TopicName == topicName);
 
                     await p.ProduceAsync(new TopicPartition(topicName,
@@ -68,11 +68,14 @@ namespace Assets.Appneuron.Core.CoreServices.MessageBrockers.Kafka
 
                 }
 
-                catch (ProduceException<Null, string> e)
-                {
-                    return new ErrorResult();
-                }
             }
+            catch (ProduceException<Null, string> e)
+            {
+                return new ErrorResult();
+            }
+
         }
     }
 }
+
+
