@@ -36,12 +36,8 @@ namespace Assets.Appneuron.Core.CoreServices.MessageBrockers.Kafka
 
             var result = await _restClientServices.IsInternetConnectedAsync();
             if (!result.Success)
+                //TODO: Collenct log
                 return new ErrorResult();
-
-            if (PartitionsOfTopicDataModel.partitionModels.Count == 0)
-            {
-                await MessageBrokerAdminHelper.SetPartitionCountAsync();
-            }
             try
             {
                 var producerConfig = new ProducerConfig
@@ -52,15 +48,12 @@ namespace Assets.Appneuron.Core.CoreServices.MessageBrockers.Kafka
 
                 var message = JsonConvert.SerializeObject(messageModel);
                 var topicName = typeof(T).Name;
-                using (var p = new ProducerBuilder<Null, string>(producerConfig).Build())
+                using (var p = new ProducerBuilder<string, string>(producerConfig).Build())
                 {
 
-                    var partitionModel = PartitionsOfTopicDataModel.partitionModels.Find(t => t.TopicName == topicName);
-
-                    await p.ProduceAsync(new TopicPartition(topicName,
-                        new Partition(new System.Random().Next(0, partitionModel.PartitionCount)))
-                    , new Message<Null, string>
+                    await p.ProduceAsync(topicName, new Message<string, string>
                     {
+                        Key = SystemInfo.deviceUniqueIdentifier,
                         Value = message
 
                     });
@@ -71,6 +64,7 @@ namespace Assets.Appneuron.Core.CoreServices.MessageBrockers.Kafka
             }
             catch (ProduceException<Null, string> e)
             {
+                //TODO: Collenct log
                 return new ErrorResult();
             }
 
