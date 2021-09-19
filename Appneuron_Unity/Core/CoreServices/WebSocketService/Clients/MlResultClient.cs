@@ -1,36 +1,40 @@
 ﻿using Appneuron.Core.CoreServices.WebSocketService.Models;
 using Appneuron.DifficultyManagerComponent;
 using Appneuron.Models;
+using AppneuronUnity.ChurnBlockerModule.Components.DifficultyComponent.FlowbaseDifficulty;
+using AppneuronUnity.Core.UnityManager;
 using Newtonsoft.Json;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using WebSocketSharp;
 
 namespace Appneuron.Core.CoreServices.WebSocketService
 {
     public class MlResultClient
     {
-        private static string clientID;
-
-        public static void ListenServerManager(string clientId)
+        public static async Task ListenServerManager()
         {
-            clientID = clientId;
-
-            var connectedServer = ConnectServerManager("127.0.0.1", 3000, clientId);
-
-            connectedServer.OnMessage += (sender, e) =>
+            await Task.Run(() =>
             {
-                Console.WriteLine("manager says: " + e.Data);
-                var data = JsonConvert.DeserializeObject<ServerModelDto>(e.Data,
-                          new JsonSerializerSettings
-                          {
-                              PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                          });
-                connectedServer.Close();
+                var clientId = new IdUnityManager().GetPlayerID();
 
-                //TODO: Burada Ml result dışında bağlanacak bir yapı var ise burada eklenmeli!!!
-                var webSocket = ConnectMlResultServer(data.Port, data.Host, clientId);
-            };
+                var connectedServer = ConnectServerManager("127.0.0.1", 3000, clientId);
+
+                connectedServer.OnMessage += (sender, e) =>
+                {
+                    Console.WriteLine("manager says: " + e.Data);
+                    var data = JsonConvert.DeserializeObject<ServerModelDto>(e.Data,
+                              new JsonSerializerSettings
+                              {
+                                  PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                              });
+                    connectedServer.Close();
+
+                    //TODO: Burada Ml result dışında bağlanacak bir yapı var ise burada eklenmeli!!!
+                    var webSocket = ConnectMlResultServer(data.Port, data.Host, clientId);
+                };
+            });
         }
 
         private static WebSocket ConnectServerManager(string host, int port, string clientId)
@@ -65,7 +69,7 @@ namespace Appneuron.Core.CoreServices.WebSocketService
                     MlResultModelDto mlResultModel = JsonConvert.DeserializeObject<MlResultModelDto>(e.Data);
 
 
-                    DifficultyManager.AskDifficultyLevelFromServer(new DifficultyModel { 
+                    DifficultyHelper.AskDifficultyLevelFromServer(new DifficultyModel { 
                     
                         CenterOfDifficultyLevel = (int)mlResultModel.ResultValue,
                         RangeCount = 2
@@ -97,11 +101,11 @@ namespace Appneuron.Core.CoreServices.WebSocketService
 
         }
 
-        private static void Ws_OnClose(object sender, CloseEventArgs e)
+        private async static void Ws_OnClose(object sender, CloseEventArgs e)
         {
             //Server çökünce veya bağlantı kapanınca burası tetikleniyor...
             Console.WriteLine("Connection Closed. Reconnecting...", e.Reason);
-            ListenServerManager(clientID);
+            await ListenServerManager();
         }
 
         private static void Ws_OnError(object sender, ErrorEventArgs e)

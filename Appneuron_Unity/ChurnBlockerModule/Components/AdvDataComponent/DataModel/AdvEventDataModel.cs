@@ -12,7 +12,6 @@ namespace Assets.Appneuron.ProjectModules.ChurnBlockerModule.Components.AdvDataC
         public string CustomerID { get; set; }
         public string TrigersInlevelName { get; set; }
         public string AdvType { get; set; }
-        public int DifficultyLevel { get; set; }
         public float InMinutes { get; set; }
         public DateTime TrigerdTime { get; set; }
 

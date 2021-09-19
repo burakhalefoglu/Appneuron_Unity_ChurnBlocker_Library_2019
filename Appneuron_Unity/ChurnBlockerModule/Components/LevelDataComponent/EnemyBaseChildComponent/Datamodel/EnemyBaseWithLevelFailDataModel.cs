@@ -13,7 +13,6 @@ namespace Assets.Appneuron.ProjectModules.ChurnBlockerModule.Components.LevelDat
         public string CustomerID { get; set; } 
         public int DiyingTimeAfterLevelStarting { get; set; }
         public string levelName { get; set; }
-        public int DiyingDifficultyLevel { get; set; }
         public float FailLocationX { get; set; }
         public float FailLocationY { get; set; }
         public float FailLocationZ { get; set; }

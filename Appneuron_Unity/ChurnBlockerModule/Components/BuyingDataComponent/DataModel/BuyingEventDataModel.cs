@@ -15,7 +15,6 @@ namespace Assets.Appneuron.ProjectModules.ChurnBlockerModule.Components.BuyingDa
         public string CustomerID { get; set; }
         public string TrigersInlevelName { get; set; }
         public string ProductType { get; set; }
-        public int DifficultyLevel { get; set; }
         public float InWhatMinutes { get; set; }
         public DateTime TrigerdTime { get; set; }
     }

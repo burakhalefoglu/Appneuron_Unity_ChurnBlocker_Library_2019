@@ -1,21 +1,23 @@
 ﻿using Appneuron.DifficultyManagerComponent.DataAccess;
 using Appneuron.Models;
 using Appneuron.Services;
+using AppneuronUnity.ChurnBlockerModule.Components.DifficultyComponent.DataModel;
+using Assets.Appneuron.Core.CoreServices.MessageBrockers.Kafka;
 using Ninject;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Appneuron.DifficultyManagerComponent
+namespace AppneuronUnity.ChurnBlockerModule.Components.DifficultyComponent.FlowbaseDifficulty
 {
-    public static class DifficultyManager
+    public static class DifficultyHelper
     {
         private static readonly DifficultySingletonModel difficultySingletonModel = DifficultySingletonModel.Instance;
         private static IDifficultyLevelDal _difficultyLevelDal;
         private static string fileName = "DifficultyLevelData.data";
 
 
-        public static void MakeConfing()
+        private static void MakeConfing()
         {
             using (var kernel = new StandardKernel())
             {
@@ -29,10 +31,11 @@ namespace Appneuron.DifficultyManagerComponent
 
         public static async void AskDifficultyLevelFromServer(DifficultyModel difficultyModel)
         {
+            MakeConfing();
 
             if (difficultyModel.CenterOfDifficultyLevel == 0)
             {
-                CalculateDifficultyManually(); 
+                CalculateDifficultyManually();
                 return;
             }
 
@@ -44,9 +47,35 @@ namespace Appneuron.DifficultyManagerComponent
         private static void CalculateDifficultyManually()
         {
             // TODO: oyun türlerine göre burası çeşitlenecek...
-            FlowBaseDifficulty();
+            int number = 1;
+            switch (number)
+            {
+                case 1:
+                    FlowBaseDifficulty();
+                    SendManuelFlowResult();
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+            }
+
         }
 
+        private static void SendManuelFlowResult()
+        {
+            using (var kernel = new StandardKernel())
+            {
+                kernel.Load(Assembly.GetExecutingAssembly());
+                var _kafkaMessageBroker = kernel.Get<IKafkaMessageBroker>();
+                var result = _kafkaMessageBroker.SendMessageAsync(new ManuelFlowModel
+                {
+
+                    DifficultyLevel = difficultySingletonModel.CurrentDifficultyLevel
+
+                });
+            }
+        }
 
         private static async void FlowBaseDifficulty()
         {
@@ -63,8 +92,8 @@ namespace Appneuron.DifficultyManagerComponent
 
             if (flow >= TopFlow)
             {
-                difficultySingletonModel.CurrentDifficultyLevel = GetCurrentDifficulty();
-                return;
+                 difficultySingletonModel.CurrentDifficultyLevel = GetCurrentDifficulty();
+                return ;
             }
             if (flow < TopFlow && flow >= 20)
             {
@@ -89,13 +118,12 @@ namespace Appneuron.DifficultyManagerComponent
 
         private static double GetFlow()
         {
-            return 100 - (CharInformation.CharFinishHealth * 100 / CharInformation.CharStarterHealth);
-             
+            return 100 - CharInformation.CharFinishHealth * 100 / CharInformation.CharStarterHealth;
+
         }
 
         private static async Task CalculateDifficulty()
         {
-
             CalculateMaxDifficultyValue();
             CalculateMinDifficultyValue();
 
@@ -125,7 +153,7 @@ namespace Appneuron.DifficultyManagerComponent
             difficultySingletonModel.MinOfDifficultyLevelRange = difficultySingletonModel.CenterOfDifficultyLevel - difficultySingletonModel.RangeCount;
             if (difficultySingletonModel.MinOfDifficultyLevelRange < 1)
                 difficultySingletonModel.MinOfDifficultyLevelRange = 1;
-            
+
             else if (difficultySingletonModel.MinOfDifficultyLevelRange > 16)
                 difficultySingletonModel.MinOfDifficultyLevelRange = 16;
         }

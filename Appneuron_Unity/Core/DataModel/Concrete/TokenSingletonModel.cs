@@ -26,7 +26,6 @@ namespace Appneuron.Core.DataModel.Concrete
             }
         }
 
-
         public string Token { get; set; }
     }
 }
