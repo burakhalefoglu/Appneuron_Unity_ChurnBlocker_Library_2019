@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AppDesignerFolder>Appsettings</AppDesignerFolder>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Confluent.Kafka" Version="1.8.1" />
+	</ItemGroup>
+  
+  
+	<ItemGroup>
+	  <Reference Include="UnityEngine.AnimationModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.AnimationModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.CoreModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.InputLegacyModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.InputLegacyModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.InputModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.InputModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UI">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Resources\PackageManager\ProjectTemplates\libcache\com.unity.template.universal-7.6.0\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UnityWebRequestModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+	    <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+  
+  
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+</Project>

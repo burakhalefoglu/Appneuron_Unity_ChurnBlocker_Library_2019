@@ -1,0 +1,14 @@
+﻿namespace AppneuronUnity
+{
+    internal static class Appsettings
+    {
+        public const string BootstrapServers = "192.168.43.178:9092";
+        public const string Connection = "tcp://127.0.0.1:5557";
+
+        public const string AuthWebApiLink = "http://localhost:52039/api/Auth/";
+        public const string ClientWebApiLink = "https://localhost:44370/WebAPI/api/";
+        public const string ClientTokenRequestName = "clienttoken";
+        public const string MlResultRequestName = "MlResultModels/getbyproductId";
+
+    }
+}
