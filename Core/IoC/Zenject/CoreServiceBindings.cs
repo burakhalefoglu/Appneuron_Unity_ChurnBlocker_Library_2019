@@ -30,7 +30,7 @@ namespace AppneuronUnity.Core.IoC.Zenject
     using AppneuronUnity.Core.UnityWorkers.ClientIdWorker.DataAccess.BinarySaving;
     using AppneuronUnity.Core.UnityWorkers.ClientIdWorker.DataAccess;
     using AppneuronUnity.Core.UnityWorkers.ClientIdWorker.UnityManager;
-    using global::Zenject;
+    using global::Appneuron.Zenject;
 
     public class CoreServiceBindings : MonoInstaller
     {

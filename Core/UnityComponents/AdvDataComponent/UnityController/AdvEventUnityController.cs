@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using UnityEngine;
 using AppneuronUnity.Core.UnityComponents.AdvDataComponent.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="AdvEventUnityController" />.

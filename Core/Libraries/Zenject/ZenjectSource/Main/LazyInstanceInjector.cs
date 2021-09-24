@@ -1,8 +1,8 @@
 
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // When the app starts up, typically there is a list of instances that need to be injected
     // The question is, what is the order that they should be injected?  Originally we would

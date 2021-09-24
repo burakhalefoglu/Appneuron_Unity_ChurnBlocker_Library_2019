@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // Similar to ProfileBlock except used for measuring speed of zenject specifically
     // And does not use unity's profiler

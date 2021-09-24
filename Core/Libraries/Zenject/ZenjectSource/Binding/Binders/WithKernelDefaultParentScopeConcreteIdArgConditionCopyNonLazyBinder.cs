@@ -1,4 +1,4 @@
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class WithKernelDefaultParentScopeConcreteIdArgConditionCopyNonLazyBinder : DefaultParentScopeConcreteIdArgConditionCopyNonLazyBinder

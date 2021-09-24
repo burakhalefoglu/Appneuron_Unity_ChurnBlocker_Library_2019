@@ -1,4 +1,4 @@
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // Note that if you want to bind to this class to have GuiRender called on
     // your non-MonoBehaviour classes, you also need to add the following to an installer

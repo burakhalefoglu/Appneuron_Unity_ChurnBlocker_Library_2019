@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ModestTree;
-using Zenject.Internal;
+using Appneuron.ModestTree;
+using Appneuron.Zenject.Internal;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public static class IProviderExtensions
     {

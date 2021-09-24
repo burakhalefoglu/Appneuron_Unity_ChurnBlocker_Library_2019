@@ -2,10 +2,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine.SceneManagement;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class ProjectKernel : MonoKernel
     {

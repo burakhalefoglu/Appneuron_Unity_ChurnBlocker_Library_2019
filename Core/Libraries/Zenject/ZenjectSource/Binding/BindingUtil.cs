@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ModestTree;
-using Zenject.Internal;
+using Appneuron.ModestTree;
+using Appneuron.Zenject.Internal;
 using System.Linq;
-using TypeExtensions = ModestTree.TypeExtensions;
+using TypeExtensions = Appneuron.ModestTree.TypeExtensions;
 
 #if !NOT_UNITY3D
 using UnityEngine;
@@ -15,7 +15,7 @@ using UnityEditor;
 
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     internal static class BindingUtil
     {

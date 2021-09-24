@@ -3,9 +3,9 @@ using System.Collections.Generic;
 #if !NOT_UNITY3D
 using UnityEngine;
 #endif
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class FactoryFromBinder<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TContract>

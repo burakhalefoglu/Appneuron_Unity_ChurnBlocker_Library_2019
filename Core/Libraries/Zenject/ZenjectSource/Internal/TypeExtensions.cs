@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace ModestTree
+namespace Appneuron.ModestTree
 {
     public static class TypeExtensions
     {

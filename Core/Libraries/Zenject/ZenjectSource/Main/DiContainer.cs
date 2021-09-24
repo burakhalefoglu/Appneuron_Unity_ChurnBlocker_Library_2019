@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
-using ModestTree.Util;
-using Zenject.Internal;
+using Appneuron.ModestTree;
+using Appneuron.ModestTree.Util;
+using Appneuron.Zenject.Internal;
 #if !NOT_UNITY3D
 using UnityEngine;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public delegate bool BindingCondition(InjectContext c);
 

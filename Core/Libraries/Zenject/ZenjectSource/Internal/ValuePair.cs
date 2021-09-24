@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ModestTree.Util
+namespace Appneuron.ModestTree.Util
 {
     public class ValuePair<T1, T2>
     {

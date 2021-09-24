@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
     public abstract class InjectAttributeBase : Zenject.Internal.PreserveAttribute

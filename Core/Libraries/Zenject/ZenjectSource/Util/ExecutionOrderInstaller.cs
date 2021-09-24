@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class ExecutionOrderInstaller : Installer<List<Type>, ExecutionOrderInstaller>
     {

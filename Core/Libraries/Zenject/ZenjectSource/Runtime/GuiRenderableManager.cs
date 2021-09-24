@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
-using ModestTree.Util;
+using Appneuron.ModestTree;
+using Appneuron.ModestTree.Util;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // See comment in IGuiRenderable.cs for usage
     public class GuiRenderableManager

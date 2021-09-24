@@ -3,7 +3,7 @@
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.UnityManager;
     using System.Reflection;
     using UnityEngine;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="DifficultyUnityController" />.

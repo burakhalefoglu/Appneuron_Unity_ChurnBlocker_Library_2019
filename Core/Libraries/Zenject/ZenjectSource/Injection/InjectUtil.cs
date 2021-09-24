@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [DebuggerStepThrough]
     public struct TypeValuePair

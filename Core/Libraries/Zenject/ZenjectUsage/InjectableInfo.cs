@@ -1,8 +1,8 @@
 using System;
 using System.Reflection;
-using Zenject.Internal;
+using Appneuron.Zenject.Internal;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // An injectable is a field or property with [Inject] attribute
     // Or a constructor parameter

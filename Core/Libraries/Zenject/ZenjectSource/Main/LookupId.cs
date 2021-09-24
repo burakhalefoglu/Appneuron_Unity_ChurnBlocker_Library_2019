@@ -1,6 +1,6 @@
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject.Internal
+namespace Appneuron.Zenject.Internal
 {
     [NoReflectionBaking]
     public class LookupId

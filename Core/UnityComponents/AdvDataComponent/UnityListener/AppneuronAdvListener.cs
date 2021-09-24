@@ -6,7 +6,7 @@
     using UnityEngine.UI;
     using AppneuronUnity.Core.UnityComponents.AdvDataComponent.UnityManager;
     using AppneuronUnity.Core.UnityWorkers.ClientIdWorker.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="AppneuronAdvListener" />.

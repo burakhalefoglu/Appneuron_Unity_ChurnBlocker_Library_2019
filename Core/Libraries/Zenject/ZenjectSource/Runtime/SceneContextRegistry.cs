@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine.SceneManagement;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class SceneContextRegistry
     {

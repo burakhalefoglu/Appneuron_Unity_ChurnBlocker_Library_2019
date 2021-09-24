@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class DictionaryPool<TKey, TValue> : StaticMemoryPool<Dictionary<TKey, TValue>>
     {

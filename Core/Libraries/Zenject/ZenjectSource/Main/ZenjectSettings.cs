@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public enum ValidationErrorResponses
     {

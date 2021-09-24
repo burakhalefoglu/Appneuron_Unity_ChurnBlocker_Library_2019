@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Zenject.Internal;
+using Appneuron.Zenject.Internal;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class SceneDecoratorContext : Context
     {

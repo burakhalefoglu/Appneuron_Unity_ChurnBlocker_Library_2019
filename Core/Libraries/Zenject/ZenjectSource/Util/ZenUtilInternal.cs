@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
-using ModestTree.Util;
+using Appneuron.ModestTree;
+using Appneuron.ModestTree.Util;
 #if !NOT_UNITY3D
 using UnityEngine.SceneManagement;
 using UnityEngine;
 #endif
 
-namespace Zenject.Internal
+namespace Appneuron.Zenject.Internal
 {
     public static class ZenUtilInternal
     {

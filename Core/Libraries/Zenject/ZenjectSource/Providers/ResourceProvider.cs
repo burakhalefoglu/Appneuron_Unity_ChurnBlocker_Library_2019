@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class ResourceProvider : IProvider

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class FromBinderNonGeneric : FromBinder

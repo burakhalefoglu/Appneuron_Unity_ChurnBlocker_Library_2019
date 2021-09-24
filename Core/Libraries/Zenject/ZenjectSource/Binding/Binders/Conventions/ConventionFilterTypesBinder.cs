@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class ConventionFilterTypesBinder : ConventionAssemblySelectionBinder

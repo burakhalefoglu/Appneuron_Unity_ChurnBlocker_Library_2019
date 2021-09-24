@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class AnimatorMoveHandlerManager : MonoBehaviour
     {

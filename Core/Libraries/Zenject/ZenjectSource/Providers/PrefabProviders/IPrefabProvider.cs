@@ -1,6 +1,6 @@
 #if !NOT_UNITY3D
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public interface IPrefabProvider
     {

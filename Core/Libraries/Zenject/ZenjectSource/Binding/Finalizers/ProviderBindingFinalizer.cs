@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
-using Zenject.Internal;
+using Appneuron.ModestTree;
+using Appneuron.Zenject.Internal;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public abstract class ProviderBindingFinalizer : IBindingFinalizer

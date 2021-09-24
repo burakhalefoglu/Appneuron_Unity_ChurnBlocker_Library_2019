@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class CopyNonLazyBinder : NonLazyBinder

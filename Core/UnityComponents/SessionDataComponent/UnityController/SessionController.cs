@@ -7,7 +7,7 @@
     using UnityEngine;
     using UnityEngine.SceneManagement;
 using AppneuronUnity.Core.UnityComponents.SessionDataComponent.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="SessionController" />.

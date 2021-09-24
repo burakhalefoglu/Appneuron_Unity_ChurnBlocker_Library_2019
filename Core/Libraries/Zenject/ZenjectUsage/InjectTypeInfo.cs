@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public delegate void ZenInjectMethod(object obj, object[] args);
     public delegate object ZenFactoryMethod(object[] args);

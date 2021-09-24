@@ -1,6 +1,6 @@
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // Note that you only need to install this once
     public class SignalBusInstaller : Installer<SignalBusInstaller>

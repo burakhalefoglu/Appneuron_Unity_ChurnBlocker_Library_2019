@@ -1,6 +1,6 @@
 using System;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public interface ILateDisposable
     {

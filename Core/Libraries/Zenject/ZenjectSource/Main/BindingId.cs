@@ -1,8 +1,8 @@
 using System;
 using System.Diagnostics;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [DebuggerStepThrough]
     public struct BindingId : IEquatable<BindingId>

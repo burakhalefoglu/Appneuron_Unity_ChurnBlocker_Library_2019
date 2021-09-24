@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
+using Appneuron.ModestTree;
 #if ZEN_SIGNALS_ADD_UNIRX
 using UniRx;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
+
 {
     public class SignalBus : ILateDisposable
     {

@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 using AppneuronUnity.Core.UnityComponents.LocationComponent.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="LocationUnityController" />.

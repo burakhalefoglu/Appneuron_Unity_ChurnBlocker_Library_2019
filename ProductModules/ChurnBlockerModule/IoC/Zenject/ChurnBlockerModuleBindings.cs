@@ -4,7 +4,7 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComp
 using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.DataAccess;
 using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.DataAccess.BinarySaving;
 using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.UnityManager;
-using Zenject;
+using Appneuron.Zenject;
 
 namespace AppneuronUnity.ProductModules.ChurnBlockerModule.IoC.Zenject
 {

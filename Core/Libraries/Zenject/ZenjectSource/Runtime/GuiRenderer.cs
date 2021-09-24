@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class GuiRenderer : MonoBehaviour
     {

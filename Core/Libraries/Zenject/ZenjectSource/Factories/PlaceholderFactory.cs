@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // Zero parameters
     public class PlaceholderFactory<TValue> : PlaceholderFactoryBase<TValue>, IFactory<TValue>

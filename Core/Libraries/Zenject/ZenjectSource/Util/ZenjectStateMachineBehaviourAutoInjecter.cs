@@ -1,7 +1,7 @@
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class ZenjectStateMachineBehaviourAutoInjecter : MonoBehaviour
     {

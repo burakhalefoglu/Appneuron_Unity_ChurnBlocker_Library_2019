@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // Zero parameters
     public class MonoPoolableMemoryPool<TValue> : MemoryPool<TValue>

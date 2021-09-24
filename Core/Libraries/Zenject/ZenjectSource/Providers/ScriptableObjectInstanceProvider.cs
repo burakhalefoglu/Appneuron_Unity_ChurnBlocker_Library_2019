@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine;
-using Zenject.Internal;
+using Appneuron.Zenject.Internal;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class ScriptableObjectInstanceProvider : IProvider

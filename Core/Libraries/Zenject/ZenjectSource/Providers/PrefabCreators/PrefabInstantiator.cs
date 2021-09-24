@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Zenject.Internal;
-using ModestTree;
+using Appneuron.Zenject.Internal;
+using Appneuron.ModestTree;
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class PrefabInstantiator : IPrefabInstantiator

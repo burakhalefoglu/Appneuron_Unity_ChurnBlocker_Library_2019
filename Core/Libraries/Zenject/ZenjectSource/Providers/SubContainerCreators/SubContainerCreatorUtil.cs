@@ -1,10 +1,10 @@
 using System;
-using ModestTree;
+using Appneuron.ModestTree;
 #if !NOT_UNITY3D
 using UnityEngine;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public static class SubContainerCreatorUtil
     {

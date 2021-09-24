@@ -5,7 +5,7 @@
     using UnityEngine;
 using AppneuronUnity.Core.UnityComponents.InventoryComponent.DataModel;
 using AppneuronUnity.Core.UnityComponents.InventoryComponent.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="InventoryUnityService" />.

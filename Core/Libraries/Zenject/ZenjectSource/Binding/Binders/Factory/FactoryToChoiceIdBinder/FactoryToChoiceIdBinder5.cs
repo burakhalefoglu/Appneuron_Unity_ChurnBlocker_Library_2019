@@ -1,4 +1,4 @@
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class FactoryToChoiceIdBinder<TParam1, TParam2, TParam3, TParam4, TParam5, TContract>

@@ -1,8 +1,8 @@
 #if !NOT_UNITY3D
 
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class PrefabProvider : IPrefabProvider

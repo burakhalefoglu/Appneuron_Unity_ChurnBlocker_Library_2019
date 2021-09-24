@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ModestTree;
+using Appneuron.ModestTree;
 #if UNITY_EDITOR
 using UnityEngine.Profiling;
 using System.Threading;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class ProfileBlock : IDisposable

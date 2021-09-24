@@ -1,4 +1,4 @@
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public enum PoolExpandMethods
     {

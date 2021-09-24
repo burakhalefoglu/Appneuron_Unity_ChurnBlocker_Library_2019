@@ -1,6 +1,6 @@
 using System;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [AttributeUsage(AttributeTargets.Parameter
         | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]

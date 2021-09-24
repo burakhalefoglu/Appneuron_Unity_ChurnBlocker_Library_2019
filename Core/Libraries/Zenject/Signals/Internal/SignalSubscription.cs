@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class SignalSubscription : IDisposable, IPoolable<Action<object>, SignalDeclaration>
     {

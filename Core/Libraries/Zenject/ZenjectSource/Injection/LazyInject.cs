@@ -1,6 +1,6 @@
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [ZenjectAllowDuringValidation]
     [NoReflectionBaking]

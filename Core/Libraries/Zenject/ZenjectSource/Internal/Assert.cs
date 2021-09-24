@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Zenject;
+using Appneuron.Zenject;
 
-namespace ModestTree
+namespace Appneuron.ModestTree
 {
     public static class Assert
     {

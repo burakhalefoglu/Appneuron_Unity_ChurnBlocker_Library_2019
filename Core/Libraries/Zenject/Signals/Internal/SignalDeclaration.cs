@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
 #if ZEN_SIGNALS_ADD_UNIRX
 using UniRx;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class SignalDeclaration : ITickable, IDisposable
     {

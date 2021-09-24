@@ -1,4 +1,4 @@
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // Zero parameters
     public class MemoryPool<TValue> : MemoryPoolBase<TValue>, IMemoryPool<TValue>, IFactory<TValue>

@@ -1,10 +1,10 @@
 using System.Linq;
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine;
 
 #pragma warning disable 219
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class CheatSheet : Installer<CheatSheet>
     {

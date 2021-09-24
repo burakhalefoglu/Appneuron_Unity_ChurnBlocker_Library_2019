@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // The given InjectContext values here should always be non-null
     public interface IProvider

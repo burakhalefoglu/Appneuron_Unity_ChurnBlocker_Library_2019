@@ -1,9 +1,9 @@
 #if !NOT_UNITY3D
 
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public abstract class MonoKernel : MonoBehaviour
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 #endif
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // You can optionally inject this interface into your classes/factories
     // rather than using DiContainer which contains many methods you might not need

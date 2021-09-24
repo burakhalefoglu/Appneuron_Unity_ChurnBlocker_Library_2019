@@ -4,7 +4,7 @@
     using UnityEngine;
 using AppneuronUnity.Core.UnityComponents.ScreenDataComponent.ModelData;
 using AppneuronUnity.Core.UnityComponents.ScreenDataComponent.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="SwipeDataUnityService" />.

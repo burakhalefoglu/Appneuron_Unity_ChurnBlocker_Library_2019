@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
-using ModestTree.Util;
+using Appneuron.ModestTree;
+using Appneuron.ModestTree.Util;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // Responsibilities:
     // - Run Initialize() on all Iinitializable's, in the order specified by InitPriority

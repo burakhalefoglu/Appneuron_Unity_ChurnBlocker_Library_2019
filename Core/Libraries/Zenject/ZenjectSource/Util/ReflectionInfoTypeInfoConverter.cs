@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using ModestTree;
+using Appneuron.ModestTree;
 #if !NOT_UNITY3D
 using UnityEngine;
 #endif
 
-namespace Zenject.Internal
+namespace Appneuron.Zenject.Internal
 {
     public static class ReflectionInfoTypeInfoConverter
     {

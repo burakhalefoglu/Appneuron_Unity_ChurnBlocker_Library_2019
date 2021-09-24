@@ -1,5 +1,5 @@
 using System;
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public static class SignalExtensions
     {

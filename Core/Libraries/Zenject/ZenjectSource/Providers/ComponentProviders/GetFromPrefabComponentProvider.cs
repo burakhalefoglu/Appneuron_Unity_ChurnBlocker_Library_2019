@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class GetFromPrefabComponentProvider : IProvider

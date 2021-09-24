@@ -1,6 +1,6 @@
 using System;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class ActionInstaller : Installer<ActionInstaller>
     {

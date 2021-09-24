@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [DebuggerStepThrough]
     [NoReflectionBaking]

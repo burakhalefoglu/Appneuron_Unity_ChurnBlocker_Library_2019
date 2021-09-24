@@ -1,5 +1,5 @@
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // This is installed by default in ProjectContext, however, if you are using Zenject outside
     // of Unity then you might want to call this

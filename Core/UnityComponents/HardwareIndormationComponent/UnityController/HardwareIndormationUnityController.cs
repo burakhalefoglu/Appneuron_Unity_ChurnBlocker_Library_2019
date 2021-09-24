@@ -2,7 +2,7 @@
 {
     using UnityEngine;
     using AppneuronUnity.Core.UnityComponents.HardwareIndormationComponent.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="HardwareIndormationUnityController" />.

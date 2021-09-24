@@ -1,6 +1,6 @@
 using System;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class FactorySubContainerBinder<TParam1, TParam2, TParam3, TContract>

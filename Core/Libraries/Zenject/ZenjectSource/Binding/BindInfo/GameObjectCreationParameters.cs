@@ -3,7 +3,7 @@
 using System;
 using UnityEngine;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class GameObjectCreationParameters

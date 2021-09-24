@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public interface ISubContainerCreator
     {

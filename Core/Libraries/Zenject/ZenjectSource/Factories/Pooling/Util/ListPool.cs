@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class ListPool<T> : StaticMemoryPool<List<T>>
     {

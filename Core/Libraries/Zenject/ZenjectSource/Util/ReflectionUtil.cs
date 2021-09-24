@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ModestTree
+namespace Appneuron.ModestTree
 {
     public static class ReflectionUtil
     {

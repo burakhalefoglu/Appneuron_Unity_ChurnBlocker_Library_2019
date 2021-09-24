@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
-using ModestTree.Util;
+using Appneuron.ModestTree.Util;
 
-namespace ModestTree
+namespace Appneuron.ModestTree
 {
     public static class LinqExtensions
     {

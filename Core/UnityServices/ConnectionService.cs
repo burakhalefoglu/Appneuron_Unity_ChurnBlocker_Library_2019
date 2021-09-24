@@ -3,7 +3,7 @@
     using AppneuronUnity.Core.CoreServices.RestClientServices.Abstract;
     using System.Reflection;
     using UnityEngine;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="ConnectionService" />.

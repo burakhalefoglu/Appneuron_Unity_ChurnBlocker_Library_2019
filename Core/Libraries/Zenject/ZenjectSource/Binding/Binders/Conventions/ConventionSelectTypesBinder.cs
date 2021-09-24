@@ -1,6 +1,6 @@
 #if !(UNITY_WSA && ENABLE_DOTNET)
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class ConventionSelectTypesBinder

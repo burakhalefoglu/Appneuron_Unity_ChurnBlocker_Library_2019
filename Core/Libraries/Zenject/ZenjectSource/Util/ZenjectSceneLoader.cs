@@ -1,11 +1,11 @@
 #if !NOT_UNITY3D
 
 using System;
-using ModestTree;
+using Appneuron.ModestTree;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public enum LoadSceneRelationship
     {

@@ -1,7 +1,7 @@
 using System;
-using ModestTree;
+using Appneuron.ModestTree;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     [NoReflectionBaking]
     public class FactorySubContainerBinderBase<TContract>

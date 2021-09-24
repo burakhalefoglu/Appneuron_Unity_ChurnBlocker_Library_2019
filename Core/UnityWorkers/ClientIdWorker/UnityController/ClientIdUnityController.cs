@@ -4,7 +4,7 @@
     using UnityEngine;
     using static AppneuronUnity.Core.UnityWorkers.ClientIdWorker.Helper.ClientIdConfigServices;
 using AppneuronUnity.Core.UnityWorkers.ClientIdWorker.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="ClientIdUnityController" />.

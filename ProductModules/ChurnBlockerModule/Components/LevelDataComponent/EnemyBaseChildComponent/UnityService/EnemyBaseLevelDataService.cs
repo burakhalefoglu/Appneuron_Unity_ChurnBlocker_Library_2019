@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using UnityEngine;
     using UnityEngine.SceneManagement;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="EnemyBaseLevelDataService" />.

@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using UnityEngine;
 using AppneuronUnity.Core.UnityComponents.ScreenDataComponent.UnityManager;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="SwipeDataUnityController" />.

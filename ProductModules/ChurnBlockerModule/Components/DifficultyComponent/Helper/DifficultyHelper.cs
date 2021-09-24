@@ -9,7 +9,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
 using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
-    using Zenject;
+    using Appneuron.Zenject;
 
     /// <summary>
     /// Defines the <see cref="DifficultyHelper" />.

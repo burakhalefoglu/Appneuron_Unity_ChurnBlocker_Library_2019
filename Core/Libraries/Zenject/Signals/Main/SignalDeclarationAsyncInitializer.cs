@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using ModestTree;
+using Appneuron.ModestTree;
+using Appneuron.Zenject;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     // This class just exists to solve a circular dependency that would otherwise happen if we
     // attempted to inject TickableManager into either SignalDeclaration or SignalBus

@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Zenject
+namespace Appneuron.Zenject
 {
     public class ZenjectBinding : MonoBehaviour
     {

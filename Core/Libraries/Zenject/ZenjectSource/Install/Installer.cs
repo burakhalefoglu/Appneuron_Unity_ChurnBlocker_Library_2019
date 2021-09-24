@@ -1,4 +1,4 @@
-namespace Zenject
+namespace Appneuron.Zenject
 {
     //
     // I'd recommmend using Installer<> instead, and then always use the approach
