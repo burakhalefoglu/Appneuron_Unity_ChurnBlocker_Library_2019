@@ -1,12 +1,12 @@
 ﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.UnityService
 {
-    using AppneuronUnity.Core.UnityServices;
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.UnityManager;
     using System.Reflection;
     using System.Threading.Tasks;
     using UnityEngine;
     using UnityEngine.SceneManagement;
     using Appneuron.Zenject;
+using AppneuronUnity.Core.CoreModule.Services;
 
     /// <summary>
     /// Defines the <see cref="EnemyBaseLevelDataService" />.

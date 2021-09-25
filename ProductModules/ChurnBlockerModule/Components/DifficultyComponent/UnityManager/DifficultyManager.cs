@@ -1,9 +1,9 @@
 ﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.UnityManager
 {
-    using AppneuronUnity.Core.CoreServices.RestClientServices.Abstract;
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.Helper;
-    using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult.Models;
     using System.Threading.Tasks;
+using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.WeboscketWorkers.DifficultyResult.Models;
 
     /// <summary>
     /// Defines the <see cref="DifficultyManager" />.

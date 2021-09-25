@@ -1,41 +1,22 @@
 ﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.Helper
 {
-    using AppneuronUnity.Core.CoreServices.MessageBrokers;
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.DataAccess;
-    using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.DataModel;
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
-    using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult.Models;
     using System;
-    using System.Reflection;
     using System.Threading.Tasks;
-using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
     using Appneuron.Zenject;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.WeboscketWorkers.DifficultyResult.Models;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.WeboscketWorkers.DifficultyResult;
 
-    /// <summary>
-    /// Defines the <see cref="DifficultyHelper" />.
-    /// </summary>
     internal static class DifficultyHelper
     {
-        /// <summary>
-        /// Defines the difficultySingletonModel.
-        /// </summary>
         private static readonly DifficultySingletonModel difficultySingletonModel = DifficultySingletonModel.Instance;
 
         [Inject]
         private static IDifficultyLevelDal _difficultyLevelDal;
 
-        private static IMessageBrokerService _messageBrokerService;
-        /// <summary>
-        /// Defines the fileName.
-        /// </summary>
         private static string fileName = "DifficultyLevelData.data";
 
-     
-
-        /// <summary>
-        /// The AskDifficultyLevelFromServer.
-        /// </summary>
-        /// <param name="difficultyModel">The difficultyModel<see cref="DifficultyModel"/>.</param>
         public static async void AskDifficultyLevelFromServer(DifficultyModel difficultyModel)
         {
             if (difficultyModel.CenterOfDifficultyLevel == 0)
@@ -49,9 +30,6 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
             await CalculateDifficulty();
         }
 
-        /// <summary>
-        /// The CalculateDifficultyManually.
-        /// </summary>
         private static void CalculateDifficultyManually()
         {
             // TODO: oyun türlerine göre burası çeşitlenecek...
@@ -71,22 +49,16 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
             }
         }
 
-        /// <summary>
-        /// The SendManuelFlowResult.
-        /// </summary>
         private static void SendManuelFlowResult()
         {
 
-                var result = _messageBrokerService.SendMessageAsync(new ManuelFlowModel
-                {
-                    DifficultyLevel = difficultySingletonModel.CurrentDifficultyLevel
-                });
-            
+            //var result = _messageBrokerService.SendMessageAsync(new ManuelFlowModel
+            //{
+            //    DifficultyLevel = difficultySingletonModel.CurrentDifficultyLevel
+            //});
+
         }
 
-        /// <summary>
-        /// The FlowBaseDifficulty.
-        /// </summary>
         private static async void FlowBaseDifficulty()
         {
             var flow = GetFlow();
@@ -117,10 +89,6 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
             difficultySingletonModel.CurrentDifficultyLevel = GetCurrentDifficulty();
         }
 
-        /// <summary>
-        /// The GetCurrentDifficulty.
-        /// </summary>
-        /// <returns>The <see cref="int"/>.</returns>
         private static int GetCurrentDifficulty()
         {
             Random random = new Random();
@@ -128,20 +96,12 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
                                                                        difficultySingletonModel.MaxOfDifficultyLevelRange);
         }
 
-        /// <summary>
-        /// The GetFlow.
-        /// </summary>
-        /// <returns>The <see cref="double"/>.</returns>
         private static double GetFlow()
         {
             //return 100 - CharInformation.CharFinishHealth * 100 / CharInformation.CharStarterHealth;
             return 0;
         }
 
-        /// <summary>
-        /// The CalculateDifficulty.
-        /// </summary>
-        /// <returns>The <see cref="Task"/>.</returns>
         private static async Task CalculateDifficulty()
         {
             CalculateMaxDifficultyValue();
@@ -166,9 +126,6 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
             await _difficultyLevelDal.InsertAsync(ComponentsConfigs.DifficultyModel + fileName, model);
         }
 
-        /// <summary>
-        /// The CalculateMinDifficultyValue.
-        /// </summary>
         private static void CalculateMinDifficultyValue()
         {
             difficultySingletonModel.MinOfDifficultyLevelRange = difficultySingletonModel.CenterOfDifficultyLevel - difficultySingletonModel.RangeCount;
@@ -178,9 +135,6 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult;
                 difficultySingletonModel.MinOfDifficultyLevelRange = 16;
         }
 
-        /// <summary>
-        /// The CalculateMaxDifficultyValue.
-        /// </summary>
         private static void CalculateMaxDifficultyValue()
         {
             difficultySingletonModel.MaxOfDifficultyLevelRange = difficultySingletonModel.CenterOfDifficultyLevel + difficultySingletonModel.RangeCount;

@@ -1,7 +1,7 @@
 ﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.DataAccess
 {
-    using AppneuronUnity.Core.Helpers.DataStorageHelper.Abstract;
-    using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult.Models;
+using AppneuronUnity.Core.ObjectBases.DataStorageHelper.Abstract;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.WeboscketWorkers.DifficultyResult.Models;
 
     /// <summary>
     /// Defines the <see cref="IDifficultyLevelDal" />.

@@ -1,7 +1,7 @@
 ﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.DataAccess.BinarySaving
 {
-    using AppneuronUnity.Core.Helpers.DataStorageHelper.Concrete.BinaryType;
-    using AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyResult.Models;
+using AppneuronUnity.Core.ObjectBases.DataStorageHelper.Concrete.BinaryType;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.WeboscketWorkers.DifficultyResult.Models;
 
     /// <summary>
     /// Defines the <see cref="BSDifficultyLevelDal" />.

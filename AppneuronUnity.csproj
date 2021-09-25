@@ -12,10 +12,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="Confluent.Kafka" Version="1.8.1" />
-	</ItemGroup>
   
   
 	<ItemGroup>
@@ -54,6 +50,11 @@
   
 	<ItemGroup>
 	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+  
+  
+	<ItemGroup>
+	  <Folder Include="Core\Models\Concrete\" />
 	</ItemGroup>
 
 </Project>
