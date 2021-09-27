@@ -8,7 +8,7 @@ using Appneuron.Zenject;
 
 namespace AppneuronUnity.ProductModules.ChurnBlockerModule.IoC.Zenject
 {
-    public class ChurnBlockerModuleBindings : MonoInstaller
+    public class ChurnBlockerBindingService : MonoInstaller
     {
         public override void InstallBindings()
         {

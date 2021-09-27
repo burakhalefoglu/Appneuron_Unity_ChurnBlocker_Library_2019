@@ -9,7 +9,7 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
     internal class WebSocketBase
     {
         private WebSocketSharp webSocket;
-        private string userId { get; set;}
+        private string userId { get; set;} 
         private string host { get; set; }
         private int port { get; set; }
 

@@ -9,7 +9,6 @@
 using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
 using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess;
 using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManager;
 
     internal class SessionManager : ISessionManager
     {

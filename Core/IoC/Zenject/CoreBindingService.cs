@@ -30,7 +30,7 @@ using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess.
 using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess;
 using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManager;
 
-    public class CoreServiceBindings : MonoInstaller
+    public class CoreBindingService : MonoInstaller
     {
         public override void InstallBindings()
         {

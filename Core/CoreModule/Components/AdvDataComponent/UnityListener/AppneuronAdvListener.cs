@@ -8,14 +8,9 @@ using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
 using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.UnityManager;
 using AppneuronUnity.Core.CoreModule.Services;
 
-    /// <summary>
-    /// Defines the <see cref="AppneuronAdvListener" />.
-    /// </summary>
     public class AppneuronAdvListener : MonoBehaviour
     {
-        /// <summary>
-        /// Defines the counterServices.
-        /// </summary>
+
         private CounterServices counterServices;
 
         [Inject]
@@ -24,9 +19,6 @@ using AppneuronUnity.Core.CoreModule.Services;
         [Inject]
         private IAdvEventUnityManager _advEventUnityManager;
 
-        /// <summary>
-        /// The Start.
-        /// </summary>
         internal void Start()
         {
 

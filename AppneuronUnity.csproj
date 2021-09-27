@@ -55,6 +55,7 @@
   
 	<ItemGroup>
 	  <Folder Include="Core\Models\Concrete\" />
+	  <Folder Include="ProductModules\ChurnPredictionModule\Model\" />
 	</ItemGroup>
 
 </Project>
