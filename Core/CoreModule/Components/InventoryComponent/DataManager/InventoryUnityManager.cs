@@ -1,25 +1,28 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataModel;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataAccess;
+    using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataModel;
+    using Zenject;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
     internal class InventoryUnityManager : IInventoryUnityManager
     {
 
-        internal IInventoryDal _inventoryDal;
+        private readonly IInventoryDal _inventoryDal;
 
         private readonly IDataCreationClient _dataCreationClient;
 
-        internal ICryptoServices _cryptoServices;
+        private readonly ICryptoServices _cryptoServices;
 
-        internal IClientIdUnityManager _clientIdUnityManager;
+        private readonly IClientIdUnityManager _clientIdUnityManager;
+
+        [Inject]
+        private readonly CoreHelper coreHelper;
 
         public InventoryUnityManager(IInventoryDal inventoryDal,
             IDataCreationClient dataCreationClient,
@@ -35,8 +38,8 @@ using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager;
         public async Task SendData(InventoryDataModel ınventoryDataModel)
         {
             var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            var customerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+            var projectId = coreHelper.GetProjectInfo().ProjectID;
+            var customerId = coreHelper.GetProjectInfo().CustomerID;
 
             InventoryDataModel dataModel = ınventoryDataModel;
             dataModel.ClientId = playerId;
@@ -49,25 +52,25 @@ using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager;
                 if (!result)
                 {
                     string fileName = _cryptoServices.GenerateStringName(6);
-                    string filepath = ComponentsConfigs.InventoryDataPath;
-                    await _inventoryDal.InsertAsync(filepath + fileName, dataModel);
+                    await _inventoryDal.InsertAsync(fileName, dataModel);
                 }
             });
         }
 
         public async Task CheckFileExistAndSend()
         {
-            List<string> FolderList = ComponentsConfigs.GetSavedDataFilesNames(
-                ComponentsConfigs.SaveTypePath.InventoryDataModel);
+            List<string> FolderList = coreHelper.GetSavedDataFilesNames<InventoryDataModel>();
+            if (FolderList.Count == 0)
+                return;
             foreach (var fileName in FolderList)
             {
-                var dataModel = await _inventoryDal.SelectAsync(ComponentsConfigs.InventoryDataPath + fileName);
+                var dataModel = await _inventoryDal.SelectAsync(fileName);
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
                 dataModel, async (result) =>
                 {
                     if (result)
                     {
-                        await _inventoryDal.DeleteAsync(ComponentsConfigs.InventoryDataPath + fileName);
+                        await _inventoryDal.DeleteAsync(fileName);
 
                     }
                 });

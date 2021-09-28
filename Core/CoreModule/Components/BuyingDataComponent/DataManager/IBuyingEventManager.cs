@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataManager
 {
     using System.Threading.Tasks;
 

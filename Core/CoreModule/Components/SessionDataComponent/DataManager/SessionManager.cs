@@ -1,14 +1,15 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess;
+    using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
+    using Zenject;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
     internal class SessionManager : ISessionManager
     {
@@ -22,6 +23,9 @@ using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
         private readonly IGameSessionEveryLoginDal _gameSessionEveryLoginDal;
 
         private readonly IClientIdUnityManager _clientIdUnityManager;
+
+        [Inject]
+        private readonly CoreHelper coreHelper;
 
         public SessionManager(ILevelBaseSessionDal levelBaseSessionDal,
             IDataCreationClient dataCreationClient,
@@ -41,13 +45,12 @@ using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
                     int levelIndex,
                     DateTime levelBaseGameSessionStart)
         {
-            string filepath = ComponentsConfigs.LevelBaseSessionDataPath;
             DateTime levelBaseGameSessionFinish = levelBaseGameSessionStart.AddSeconds(sessionSeconds);
             float minutes = sessionSeconds / 60;
 
             var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            var customerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+            var projectId = coreHelper.GetProjectInfo().ProjectID;
+            var customerId = coreHelper.GetProjectInfo().CustomerID;
 
             LevelBaseSessionDataModel dataModel = new LevelBaseSessionDataModel
             {
@@ -68,24 +71,26 @@ using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
                 if (!result)
                 {
                     string fileName = _cryptoServices.GenerateStringName(6);
-                    await _levelBaseSessionDal.InsertAsync(filepath + fileName, dataModel);
+                    await _levelBaseSessionDal.InsertAsync(fileName, dataModel);
                 }
             });
         }
 
         public async Task CheckLevelBaseSessionDataAndSend()
         {
-            List<string> FolderList = ComponentsConfigs.GetSavedDataFilesNames(ComponentsConfigs.SaveTypePath.LevelBaseSessionDataModel);
+            List<string> FolderList = coreHelper.GetSavedDataFilesNames<LevelBaseSessionDataModel>();
+            if (FolderList.Count == 0)
+                return;
             foreach (var fileName in FolderList)
             {
-                var dataModel = await _levelBaseSessionDal.SelectAsync(ComponentsConfigs.LevelBaseSessionDataPath + fileName);
+                var dataModel = await _levelBaseSessionDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
                 dataModel, async (result) =>
                 {
                     if (result)
                     {
-                        await _levelBaseSessionDal.DeleteAsync(ComponentsConfigs.LevelBaseSessionDataPath + fileName);
+                        await _levelBaseSessionDal.DeleteAsync(fileName);
 
                     }
                 });
@@ -96,10 +101,9 @@ using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
             DateTime sessionFinishTime,
             float minutes)
         {
-            string filepath = ComponentsConfigs.GameSessionEveryLoginDataPath;
             var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            var customerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+            var projectId = coreHelper.GetProjectInfo().ProjectID;
+            var customerId = coreHelper.GetProjectInfo().CustomerID;
 
             GameSessionEveryLoginDataModel dataModel = new GameSessionEveryLoginDataModel
             {
@@ -118,24 +122,26 @@ using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataModel;
                 if (!result)
                 {
                     string fileName = _cryptoServices.GenerateStringName(6);
-                    await _gameSessionEveryLoginDal.InsertAsync(filepath + fileName, dataModel);
+                    await _gameSessionEveryLoginDal.InsertAsync(fileName, dataModel);
                 }
             });
         }
 
         public async Task CheckGameSessionEveryLoginDataAndSend()
         {
-            List<string> FolderList = ComponentsConfigs.GetSavedDataFilesNames(ComponentsConfigs.SaveTypePath.GameSessionEveryLoginDataModel);
+            List<string> FolderList = coreHelper.GetSavedDataFilesNames<GameSessionEveryLoginDataModel>();
+            if (FolderList.Count == 0)
+                return;
             foreach (var fileName in FolderList)
             {
-                var dataModel = await _gameSessionEveryLoginDal.SelectAsync(ComponentsConfigs.GameSessionEveryLoginDataPath + fileName);
+                var dataModel = await _gameSessionEveryLoginDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
                 dataModel, async (result) =>
                 {
                     if (result)
                     {
-                        await _gameSessionEveryLoginDal.DeleteAsync(ComponentsConfigs.GameSessionEveryLoginDataPath + fileName);
+                        await _gameSessionEveryLoginDal.DeleteAsync(fileName);
 
                     }
                 });

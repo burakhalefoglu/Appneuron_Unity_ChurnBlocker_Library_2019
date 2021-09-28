@@ -1,8 +1,9 @@
 ﻿
 using System;
 using UnityEngine;
+using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer;
 
-namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers.RemoteChurnSettings.RemoteOffer
+namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer
 {
     public class RemoteOfferModel
     {

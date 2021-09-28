@@ -1,75 +1,44 @@
-﻿namespace AppneuronUnity.Core.AuthModule.AuthComponent.UnityManager
+﻿namespace AppneuronUnity.Core.AuthModule.AuthComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System;
     using System.Threading.Tasks;
     using UnityEngine;
-using AppneuronUnity;
-using AppneuronUnity.Core.AuthModule.AuthComponent.DataAccess;
-using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel;
-using AppneuronUnity.Core.AuthModule.AuthComponent.UnityManager;
-using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
-using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel.Jwt;
+    using AppneuronUnity;
+    using AppneuronUnity.Core.AuthModule.AuthComponent.DataAccess;
+    using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel;
+    using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
+    using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel.Jwt;
+    using Zenject;
 
-    /// <summary>
-    /// Defines the <see cref="AuthUnityManager" />.
-    /// </summary>
     internal class AuthUnityManager : IAuthUnityManager
     {
-        /// <summary>
-        /// Defines the filePath.
-        /// </summary>
-        private readonly string filePath = ComponentsConfigs.TokenDataModel;
+        private readonly string fileName = Appsettings.TokenName;
 
-        /// <summary>
-        /// Defines the fileName.
-        /// </summary>
-        private readonly string fileName = Websettings.TokenName;
-
-        /// <summary>
-        /// Defines the RequestPath.
-        /// </summary>
         private readonly string RequestPath = Appsettings.AuthWebApiLink + Appsettings.ClientTokenRequestName;
 
-        /// <summary>
-        /// Defines the _authDal.
-        /// </summary>
         internal IAuthDal _authDal;
 
-        /// <summary>
-        /// The OnCheckLoacalData.
-        /// </summary>
-        /// <returns>The <see cref="Task"/>.</returns>
         public delegate Task OnLogin();
 
-        /// <summary>
-        /// Defines the CheckLocalData.
-        /// </summary>
         public static event OnLogin onLogin;
 
-        /// <summary>
-        /// Defines the _restClientServices.
-        /// </summary>
         internal IRestClientServices _restClientServices;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuthUnityManager"/> class.
-        /// </summary>
-        /// <param name="authDal">The authDal<see cref="IAuthDal"/>.</param>
-        /// <param name="restClientServices">The restClientServices<see cref="IRestClientServices"/>.</param>
+        [Inject]
+        private readonly CoreHelper coreHelper;
+
         public AuthUnityManager(IAuthDal authDal, IRestClientServices restClientServices)
         {
             _authDal = authDal;
             _restClientServices = restClientServices;
         }
 
-        /// <summary>
-        /// The Login.
-        /// </summary>
-        /// <returns>The <see cref="Task"/>.</returns>
         public async Task Login()
         {
             var tokenmodel = await checkTokenOnfile();
+            if (tokenmodel == null)
+                return;
             if (tokenmodel.Token != "" && tokenmodel.Expiration > DateTime.Now)
             {
                 TokenSingletonModel.Instance.Token = tokenmodel.Token;
@@ -77,8 +46,8 @@ using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel.Jwt;
                 return;
             }
 
-            string projectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            string customerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+            string projectId = coreHelper.GetProjectInfo().ProjectID;
+            string customerId = coreHelper.GetProjectInfo().CustomerID;
 
             var JwtRequestModel = new AuthRequestModel
             {
@@ -90,6 +59,9 @@ using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel.Jwt;
             var result = await _restClientServices.PostAsync<JwtResponseModel>
                 (RequestPath,
                 JwtRequestModel);
+            if (result == null)
+                return;
+
             if (result.Success)
             {
                 await SaveTokenOnfile(result.Data.Data);
@@ -98,25 +70,16 @@ using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel.Jwt;
             }
         }
 
-        /// <summary>
-        /// The checkTokenOnfile.
-        /// </summary>
-        /// <returns>The <see cref="Task{TokenDataModel}"/>.</returns>
         public async Task<TokenDataModel> checkTokenOnfile()
         {
-            var dataModel = await _authDal.SelectAsync(filePath + fileName);
+            var dataModel = await _authDal.SelectAsync(fileName + fileName);
             return dataModel;
         }
 
-        /// <summary>
-        /// The SaveTokenOnfile.
-        /// </summary>
-        /// <param name="tokenDataModel">The tokenDataModel<see cref="TokenDataModel"/>.</param>
-        /// <returns>The <see cref="Task"/>.</returns>
         public async Task SaveTokenOnfile(TokenDataModel tokenDataModel)
         {
             TokenSingletonModel.Instance.Token = tokenDataModel.Token;
-            await _authDal.InsertAsync(filePath + fileName, tokenDataModel);
+            await _authDal.InsertAsync(fileName, tokenDataModel);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿
+using AppneuronUnity.Core.Extentions;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.InterstitialAd
@@ -7,6 +9,6 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.Interstiti
     {
         Task StartListen();
         Task GetInterstielFrequencyFromServer();
-        int GetInterstielFrequency();
+        SerializableDictionary<string, int> GetInterstielFrequency();
     }
 }

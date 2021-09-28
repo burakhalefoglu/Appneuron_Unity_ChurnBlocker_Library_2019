@@ -3,10 +3,10 @@
     using UnityEngine;
     using UnityEngine.SceneManagement;
     using UnityEngine.UI;
-    using Appneuron.Zenject;
-using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Services;
+    using AppneuronUnity.Core.CoreModule.Services;
+    using Zenject;
+using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataManager;
 
     public class AppneuronAdvListener : MonoBehaviour
     {

@@ -1,16 +1,22 @@
-﻿using Appneuron.Zenject;
+﻿using Zenject;
 using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
 using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
-using AppneuronUnity.ProductModules.ChurnPrediction.WebSocketWorkers.ChurnMLResult.Model;
-using AppneuronUnity.ProductModules.ChurnPrediction.Workers.RemoteChurnSettings.RemoteOffer;
 using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.InterstitialAd;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections.Generic;
+using AppneuronUnity.Core.Extentions;
+using System;
+using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer;
+using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers;
+using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
-namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers
+namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
 {
-    public class ChurnPredictionWorkerModule: MonoBehaviour
+    [Serializable] public class MyDictionary1 : SerializableDictionary<string, int> { }
+
+
+    public class ChurnPredictionWorkerModule : MonoBehaviour
     {
         [Inject]
         private IRemoteClient remoteClient;
@@ -27,10 +33,9 @@ namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers
         [Inject]
         private IRemoteOfferUnityWorker remoteOfferUnityWorker;
 
+        public MyDictionary1 DefaultIAdvFrequencyStrategy;
 
 
-        [SerializeField]
-        int DefaultInterstielFrequency;
         private RemoteOfferModel remoteOfferModel;
 
         private async void Start()
@@ -49,7 +54,7 @@ namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers
                     Debug.Log(data.ThreeDayChurn);
                     if (data.ThreeDayChurn)
                     {
-                        DefaultInterstielFrequency = interstielAdUnityWorker.GetInterstielFrequency();
+                        DefaultIAdvFrequencyStrategy = (MyDictionary1)interstielAdUnityWorker.GetInterstielFrequency();
                         remoteOfferModel = remoteOfferUnityWorker.GetRemoteOffer();
                     }
 
@@ -57,9 +62,9 @@ namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers
                 });
         }
 
-        public int GetDefaultInterstielFrequency()
+        public SerializableDictionary<string, int> GetDefaultInterstielFrequency()
         {
-            return DefaultInterstielFrequency;
+            return DefaultIAdvFrequencyStrategy;
         }
 
         public RemoteOfferModel GetRemoteOffer()
@@ -70,11 +75,14 @@ namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers
         private async Task AskMlResult()
         {
             //TODO: Churn Ml Result linki eklenecek.
-            var result = await restApiClient.GetAsync<ChurnMlResultModel>("");
-
+            var result = await restApiClient.GetAsync<ChurnMlResultModel>("https://jsonplaceholder.typicode.com/posts");
+            if (result.Data == null)
+            {
+                return;
+            }
             if (result.Data.ThreeDayChurn)
             {
-                DefaultInterstielFrequency = interstielAdUnityWorker.GetInterstielFrequency();
+                DefaultIAdvFrequencyStrategy = (MyDictionary1)interstielAdUnityWorker.GetInterstielFrequency();
                 remoteOfferModel = remoteOfferUnityWorker.GetRemoteOffer();
             }
         }

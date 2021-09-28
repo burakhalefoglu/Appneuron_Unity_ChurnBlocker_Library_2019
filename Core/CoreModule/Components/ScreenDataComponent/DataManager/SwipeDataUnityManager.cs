@@ -1,16 +1,15 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using UnityEngine;
-    using UnityEngine.SceneManagement;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.ModelData;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess;
+    using Zenject;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
 
     internal class SwipeDataUnityManager : ISwipeDataUnityManager
     {
@@ -26,6 +25,11 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
 
         private readonly IClientIdUnityManager _clientIdUnityManager;
 
+        [Inject]
+        private readonly CoreHelper coreHelper;
+
+        SwipeDataModel swipeDataModel;
+
         public SwipeDataUnityManager(IDataCreationClient dataCreationClient,
             ISwipeScreenDataDal swipeScreenDataDal,
             ICryptoServices cryptoServices,
@@ -35,23 +39,23 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
             _swipeScreenDataDal = swipeScreenDataDal;
             _cryptoServices = cryptoServices;
             _clientIdUnityManager = clientIdUnityManager;
+            swipeDataModel = new SwipeDataModel();
         }
 
         public async Task SaveLocalData(SwipeDataModel swipeDataModel)
         {
             string fileName = _cryptoServices.GenerateStringName(6);
-            string filepath = ComponentsConfigs.SwipeDataModelPath + fileName;
-            await _swipeScreenDataDal.InsertAsync(filepath, swipeDataModel);
+            await _swipeScreenDataDal.InsertAsync(fileName, swipeDataModel);
         }
 
-        public async Task CheckAdvFileAndSendData()
+        public async Task CheckSwipeDataFileAndSendData()
         {
-            List<string> FolderNameList = ComponentsConfigs.GetSavedDataFilesNames(
-                ComponentsConfigs.SaveTypePath.SwipeDataModel);
+            List<string> FolderNameList = coreHelper.GetSavedDataFilesNames<SwipeDataModel>();
+            if (FolderNameList.Count == 0)
+                return;
             foreach (var fileName in FolderNameList)
             {
-                var dataModel = await _swipeScreenDataDal.SelectAsync(
-                    ComponentsConfigs.SwipeDataModelPath + fileName);
+                var dataModel = await _swipeScreenDataDal.SelectAsync(fileName);
 
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
@@ -59,7 +63,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
                 {
                     if (result)
                     {
-                        await _swipeScreenDataDal.DeleteAsync(ComponentsConfigs.SwipeDataModelPath + fileName);
+                        await _swipeScreenDataDal.DeleteAsync(fileName);
 
                     }
                 });
@@ -67,13 +71,14 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
         }
 
         public async Task CalculateSwipeDirection(SwipeModelDto swipeModelDto,
-            SwipeDataModel swipeDataModel)
+            string scenemName,
+            int sceneIndex)
         {
             swipeDataModel.ClientId = _clientIdUnityManager.GetPlayerID();
-            swipeDataModel.ProjectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            swipeDataModel.CustomerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
-            swipeDataModel.LevelName = SceneManager.GetActiveScene().name;
-            swipeDataModel.LevelIndex = SceneManager.GetActiveScene().buildIndex;
+            swipeDataModel.ProjectId = coreHelper.GetProjectInfo().ProjectID;
+            swipeDataModel.CustomerId = coreHelper.GetProjectInfo().CustomerID;
+            swipeDataModel.LevelName = scenemName;
+            swipeDataModel.LevelIndex = sceneIndex;
 
             if (swipeModelDto == null && swipeDataModel.SwipeDirection != 0)
             {
@@ -144,7 +149,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
                         await SaveLocalData(swipeDataModel);
 
                     }
-                }); 
+                });
                 swipeDataModel.StartLocX = swipeModelDto.LocX;
                 swipeDataModel.StartLocY = swipeModelDto.LocY;
                 swipeDataModel.CreatedAt = swipeModelDto.CreatedAt;

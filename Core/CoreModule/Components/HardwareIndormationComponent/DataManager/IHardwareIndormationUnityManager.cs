@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataManager
 {
     using System.Threading.Tasks;
 

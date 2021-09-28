@@ -1,11 +1,11 @@
 ﻿
 using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
 using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
 using System.Threading.Tasks;
 using UnityEngine;
+using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
-namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers.RemoteChurnSettings.RemoteOffer
+namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer
 {
     internal class RemoteOfferUnityWorker : IRemoteOfferUnityWorker
     {
@@ -39,8 +39,9 @@ namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers.RemoteChurnSetti
         public async Task GetRemoteOfferFromServer()
         {
             //TODO: Burada remote link eklenecek.
-            var result = await _restApiClient.GetAsync<RemoteOfferModel>("");
-            remoteOfferModel = result.Data;
+            var result = await _restApiClient.GetAsync<RemoteOfferModel>("https://jsonplaceholder.typicode.com/posts");
+            if(result.Data != null)
+                remoteOfferModel = result.Data;
         }
 
         public RemoteOfferModel GetRemoteOffer()

@@ -16,5 +16,11 @@
         public const string ClientTokenRequestName = "clienttoken";
         public const string MlResultRequestName = "MlResultModels/getbyproductId";
 
+        public const string TokenName = "JwtToken";
+
+        public const int VisualData = 1;
+        public const int ChurnPrediction = 2;
+        public const int ChurnBlocker = 3;
+
     }
 }

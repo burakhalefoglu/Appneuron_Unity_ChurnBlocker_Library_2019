@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.LocationComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.LocationComponent.DataManager
 {
     using System.Threading.Tasks;
 

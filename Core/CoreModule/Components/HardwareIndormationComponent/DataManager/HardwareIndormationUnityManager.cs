@@ -1,18 +1,21 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Threading.Tasks;
     using UnityEngine;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataModel;
-using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.UnityManager;
+    using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataModel;
+    using Zenject;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
     internal class HardwareIndormationUnityManager : IHardwareIndormationUnityManager
     {
         private readonly IDataCreationClient _dataCreationClient;
 
         private readonly IClientIdUnityManager _clientIdUnityManager;
+
+        [Inject]
+        private readonly CoreHelper coreHelper;
 
         public HardwareIndormationUnityManager(IDataCreationClient dataCreationClient,
             IClientIdUnityManager clientIdUnityManager)
@@ -25,8 +28,8 @@ using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.Uni
         {
             var hardwareInformation = new HardwareIndormationModel();
             hardwareInformation.ClientId = _clientIdUnityManager.GetPlayerID();
-            hardwareInformation.ProjectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            hardwareInformation.CustomerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+            hardwareInformation.ProjectId = coreHelper.GetProjectInfo().ProjectID;
+            hardwareInformation.CustomerId = coreHelper.GetProjectInfo().CustomerID;
             hardwareInformation.DeviceModel = SystemInfo.deviceModel;
             hardwareInformation.DeviceName = SystemInfo.deviceName;
             hardwareInformation.DeviceType = ((int)SystemInfo.deviceType);

@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.Core.AuthModule.AuthComponent.UnityManager
+﻿namespace AppneuronUnity.Core.AuthModule.AuthComponent.DataManager
 {
     using System.Threading.Tasks;
 using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel;

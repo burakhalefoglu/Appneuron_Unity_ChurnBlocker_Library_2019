@@ -1,11 +1,11 @@
-﻿using Appneuron.Zenject;
-using AppneuronUnity.ProductModules.ChurnPrediction.WebSocketWorkers.RemoteChurnSettings.InterstitialAd.UnityWorker;
-using AppneuronUnity.ProductModules.ChurnPrediction.Workers.RemoteChurnSettings.RemoteOffer;
+﻿using Zenject;
 using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.InterstitialAd;
+using AppneuronUnity.ProductModules.ChurnPredictionModule.IoC.Zenject;
+using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer;
 
-namespace AppneuronUnity.ProductModules.ChurnPrediction.IoC.Zenject
+namespace AppneuronUnity.ProductModules.ChurnPredictionModule.IoC.Zenject
 {
-    public class ChurnPredictionBindingService : MonoInstaller
+    public class ChurnPredictionBindingService : Installer<ChurnPredictionBindingService>
     {
         public override void InstallBindings()
         {

@@ -1,16 +1,16 @@
-﻿using Appneuron.Zenject;
-using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.LocationComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManager;
+﻿using Zenject;
 using AppneuronUnity.Core.CoreModule.Services;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using static AppneuronUnity.Core.AuthModule.ClientIdComponent.Helper.ClientIdConfigServices;
+using static AppneuronUnity.Core.AuthModule.ClientIdComponent.DataHelper.ClientIdConfigServices;
+using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.LocationComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataManager;
 
 namespace AppneuronUnity.Core.CoreModule
 {
@@ -66,16 +66,16 @@ namespace AppneuronUnity.Core.CoreModule
             await _advEventUnityManager.CheckAdvFileAndSendData();
             await _buyingEventManager.CheckAdvFileAndSendData();
             await _inventoryUnityManager.CheckFileExistAndSend();
-            await _clickDataUnityManager.CheckAdvFileAndSendData();
-            await _swipeDataUnityManager.CheckAdvFileAndSendData();
+            await _clickDataUnityManager.CheckClickDataFileAndSendData();
+            await _swipeDataUnityManager.CheckSwipeDataFileAndSendData();
             await _sessionManager.CheckGameSessionEveryLoginDataAndSend();
             await _sessionManager.CheckLevelBaseSessionDataAndSend();
 
             localDataService.CheckLocalData += _advEventUnityManager.CheckAdvFileAndSendData;
             localDataService.CheckLocalData += _buyingEventManager.CheckAdvFileAndSendData;
             localDataService.CheckLocalData += _inventoryUnityManager.CheckFileExistAndSend;
-            localDataService.CheckLocalData += _clickDataUnityManager.CheckAdvFileAndSendData;
-            localDataService.CheckLocalData += _swipeDataUnityManager.CheckAdvFileAndSendData;
+            localDataService.CheckLocalData += _clickDataUnityManager.CheckClickDataFileAndSendData;
+            localDataService.CheckLocalData += _swipeDataUnityManager.CheckSwipeDataFileAndSendData;
             localDataService.CheckLocalData += _sessionManager.CheckGameSessionEveryLoginDataAndSend;
             localDataService.CheckLocalData += _sessionManager.CheckLevelBaseSessionDataAndSend;
         }
@@ -85,8 +85,8 @@ namespace AppneuronUnity.Core.CoreModule
             localDataService.CheckLocalData -= _advEventUnityManager.CheckAdvFileAndSendData;
             localDataService.CheckLocalData -= _buyingEventManager.CheckAdvFileAndSendData;
             localDataService.CheckLocalData -= _inventoryUnityManager.CheckFileExistAndSend;
-            localDataService.CheckLocalData -= _clickDataUnityManager.CheckAdvFileAndSendData;
-            localDataService.CheckLocalData -= _swipeDataUnityManager.CheckAdvFileAndSendData;
+            localDataService.CheckLocalData -= _clickDataUnityManager.CheckClickDataFileAndSendData;
+            localDataService.CheckLocalData -= _swipeDataUnityManager.CheckSwipeDataFileAndSendData;
             localDataService.CheckLocalData -= _sessionManager.CheckGameSessionEveryLoginDataAndSend;
             localDataService.CheckLocalData -= _sessionManager.CheckLevelBaseSessionDataAndSend;
         }

@@ -1,19 +1,16 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataModel;
-using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataAccess;
+    using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataModel;
+    using Zenject;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
-    /// <summary>
-    /// Defines the <see cref="BuyingEventManager" />.
-    /// </summary>
     internal class BuyingEventManager : IBuyingEventManager
     {
 
@@ -24,6 +21,9 @@ using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager
         private readonly IDataCreationClient _dataCreationClient;
 
         private readonly ICryptoServices _cryptoServices;
+
+        [Inject]
+        private readonly CoreHelper coreHelper;
 
         public BuyingEventManager(IBuyingEventDal buyingEventDal,
             ICryptoServices cryptoServices,
@@ -38,20 +38,19 @@ using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager
 
         public async Task CheckAdvFileAndSendData()
         {
-            List<string> FolderList = ComponentsConfigs.GetSavedDataFilesNames(ComponentsConfigs
-                                                                                      .SaveTypePath
-                                                                                      .BuyingEventDataModel);
-
+            List<string> FolderList = coreHelper.GetSavedDataFilesNames<BuyingEventDataModel>();
+            if (FolderList.Count == 0)
+                return;
             foreach (var fileName in FolderList)
             {
-                var dataModel = await _buyingEventDal.SelectAsync(ComponentsConfigs.BuyingEventDataPath + fileName);
+                var dataModel = await _buyingEventDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
                 dataModel, async (result) =>
                 {
                     if (result)
                     {
-                        await _buyingEventDal.DeleteAsync(ComponentsConfigs.AdvEventDataPath + fileName);
+                        await _buyingEventDal.DeleteAsync(fileName);
 
                     }
                 });
@@ -67,8 +66,8 @@ using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager
             BuyingEventDataModel dataModel = new BuyingEventDataModel
             {
                 ClientId = clientId,
-                ProjectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID(),
-                CustomerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID(),
+                ProjectId = coreHelper.GetProjectInfo().ProjectID,
+                CustomerId = coreHelper.GetProjectInfo().CustomerID,
                 LevelName = levelName,
                 LevelIndex = levelIndex,
                 ProductType = Tag,
@@ -82,8 +81,7 @@ using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager
                 if (!result)
                 {
                     string fileName = _cryptoServices.GenerateStringName(6);
-                    string filepath = ComponentsConfigs.AdvEventDataPath + fileName;
-                    await _buyingEventDal.InsertAsync(filepath, dataModel);
+                    await _buyingEventDal.InsertAsync(fileName, dataModel);
                 }
             });
 

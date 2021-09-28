@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataManager
 {
     using System;
     using System.Threading.Tasks;

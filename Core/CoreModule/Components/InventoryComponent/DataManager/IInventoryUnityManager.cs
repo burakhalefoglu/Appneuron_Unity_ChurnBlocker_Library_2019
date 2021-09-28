@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataManager
 {
     using System.Threading.Tasks;
 using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataModel;

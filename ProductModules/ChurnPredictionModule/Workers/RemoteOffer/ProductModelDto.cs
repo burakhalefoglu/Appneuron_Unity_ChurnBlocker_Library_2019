@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AppneuronUnity.ProductModules.ChurnPrediction.Workers.RemoteChurnSettings.RemoteOffer
+namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer
 {
     public class ProductModelDto
     {

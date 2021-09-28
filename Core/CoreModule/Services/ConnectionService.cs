@@ -2,7 +2,7 @@
 {
     using System.Reflection;
     using UnityEngine;
-    using Appneuron.Zenject;
+    using Zenject;
 using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
 
     /// <summary>

@@ -1,16 +1,16 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
+﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using UnityEngine;
     using UnityEngine.SceneManagement;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.ModelData;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess;
+    using Zenject;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
 
     internal class ClickDataUnityManager : IClickDataUnityManager
     {
@@ -23,7 +23,13 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
 
         private readonly IClientIdUnityManager _clientIdUnityManager;
 
+        [Inject]
+        private readonly CoreHelper coreHelper;
+
+
         private Touch theTouch;
+
+        List<ClickDataModel> clickDataModelList;
 
         public ClickDataUnityManager(IDataCreationClient dataCreationClient,
             IClickDataDal clickDataDal,
@@ -34,6 +40,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
             _clickDataDal = clickDataDal;
             _cryptoServices = cryptoServices;
             _clientIdUnityManager = clientIdUnityManager;
+            clickDataModelList = new List<ClickDataModel>();
         }
 
         public List<ClickDataDto> DetectDetaildRawTouchInformation()
@@ -68,32 +75,31 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
         public async Task SaveLocalData(ClickDataModel clickDataModel)
         {
             string fileName = _cryptoServices.GenerateStringName(6);
-            string filepath = ComponentsConfigs.ClickDataModelPath + fileName;
-            await _clickDataDal.InsertAsync(filepath, clickDataModel);
+            await _clickDataDal.InsertAsync(fileName, clickDataModel);
         }
 
-        public async Task CheckAdvFileAndSendData()
+        public async Task CheckClickDataFileAndSendData()
         {
-            List<string> FolderNameList = ComponentsConfigs.GetSavedDataFilesNames(
-                ComponentsConfigs.SaveTypePath.ClickDataModel);
+            List<string> FolderNameList = coreHelper.GetSavedDataFilesNames<ClickDataModel>();
+            if (FolderNameList.Count == 0)
+                return;
             foreach (var fileName in FolderNameList)
             {
-                var dataModel = await _clickDataDal.SelectAsync(ComponentsConfigs.ClickDataModelPath + fileName);
+                var dataModel = await _clickDataDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
                 dataModel, async (result) =>
                 {
                     if (result)
                     {
-                        await _clickDataDal.DeleteAsync(ComponentsConfigs.ClickDataModelPath + fileName);
+                        await _clickDataDal.DeleteAsync(fileName);
 
                     }
                 });
             }
         }
 
-        public async Task ClickCalculater(List<ClickDataDto> resultClickDtoList,
-            List<ClickDataModel> clickDataModelList)
+        public async Task ClickCalculater(List<ClickDataDto> resultClickDtoList)
         {
             await Task.Run(() =>
             {
@@ -114,8 +120,8 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager
                             clickDataModel.CreatedAt = r.CreatedAt;
 
                             clickDataModel.ClientId = _clientIdUnityManager.GetPlayerID();
-                            clickDataModel.ProjectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-                            clickDataModel.CustomerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+                            clickDataModel.ProjectId = coreHelper.GetProjectInfo().ProjectID;
+                            clickDataModel.CustomerId = coreHelper.GetProjectInfo().CustomerID;
                             clickDataModel.LevelName = SceneManager.GetActiveScene().name;
                             clickDataModel.LevelIndex = SceneManager.GetActiveScene().buildIndex;
 

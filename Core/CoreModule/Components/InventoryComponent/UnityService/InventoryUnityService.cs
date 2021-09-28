@@ -3,9 +3,9 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using UnityEngine;
-    using Appneuron.Zenject;
+    using Zenject;
 using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataModel;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager;
+using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataManager;
 
     /// <summary>
     /// Defines the <see cref="InventoryUnityService" />.

@@ -3,34 +3,35 @@
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
     using AppneuronUnity.Core.AuthModule.AuthComponent.DataAccess;
     using AppneuronUnity.Core.AuthModule.AuthComponent.DataAccess.BinarySaving;
-    using AppneuronUnity.Core.AuthModule.AuthComponent.UnityManager;
     using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataAccess;
     using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataAccess.BinarySaving;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
-    using global::Appneuron.Zenject;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Concrete.Effortless;
-using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
-using AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity;
-using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataAccess.BinarySaving;
-using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataAccess.BinarySaving;
-using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataAccess.BinarySaving;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.LocationComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess.BSDal;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess.BinarySaving;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManager;
+    using global::Zenject;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Concrete.Effortless;
+    using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
+    using AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity;
+    using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataAccess.BinarySaving;
+    using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataAccess;
+    using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataAccess.BinarySaving;
+    using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataAccess;
+    using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataAccess.BinarySaving;
+    using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataAccess;
+    using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess.BSDal;
+    using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataAccess;
+    using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess.BinarySaving;
+    using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataAccess;
+    using AppneuronUnity.Core.AuthModule.AuthComponent.DataManager;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.LocationComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager;
+    using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataManager;
+    using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
 
-    public class CoreBindingService : MonoInstaller
+    public class CoreBindingService : Installer<CoreBindingService>
     {
         public override void InstallBindings()
         {
@@ -38,6 +39,8 @@ using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManage
             Container.Bind<IRestClientServices>().To<UnityRestApiService>().AsSingle();
             Container.Bind<IRemoteClient>().To<RemoteClient>().AsSingle();
             Container.Bind<IDataCreationClient>().To<DataCreationClient>().AsSingle();
+            Container.Bind<CoreHelper>().AsSingle();
+            
 
             Container.Bind<IClientIdDal>().To<BSClientIdDal>().AsSingle();
             Container.Bind<IClientIdUnityManager>().To<ClientIdUnityManager>().AsSingle();

@@ -1,7 +1,4 @@
-﻿using Appneuron.Zenject;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.ModelData;
-using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.UnityManager;
-using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.UnityManager;
+﻿using Zenject;
 using AppneuronUnity.Core.CoreModule.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager;
+using AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataManager;
 
 namespace AppneuronUnity.Core.CoreModule
 {
@@ -19,10 +18,6 @@ namespace AppneuronUnity.Core.CoreModule
         private int levelIndex;
         private CounterServices counterServices;
         private LocalDataService localDataService;
-
-        internal List<ClickDataModel> clickDataModelList;
-
-        internal SwipeDataModel swipeDataModel;
 
         [Inject]
         internal IClickDataUnityManager _clickDataUnityManager;
@@ -37,9 +32,6 @@ namespace AppneuronUnity.Core.CoreModule
         {
             counterServices = GameObject.FindGameObjectWithTag("Appneuron").GetComponent<CounterServices>();
             localDataService = GameObject.FindGameObjectWithTag("Appneuron").GetComponent<LocalDataService>();
-            clickDataModelList = new List<ClickDataModel>();
-            swipeDataModel = new SwipeDataModel();
-            swipeDataModel.SwipeDirection = 0;
         }
 
         private async void Update()
@@ -93,7 +85,10 @@ namespace AppneuronUnity.Core.CoreModule
         private async Task SwipeDataManager()
         {
             var swipeModelDto = _swipeDataUnityManager.ListenTouchDirection();
-            await _swipeDataUnityManager.CalculateSwipeDirection(swipeModelDto, swipeDataModel);
+            if (swipeModelDto != null)
+                await _swipeDataUnityManager.CalculateSwipeDirection(swipeModelDto,
+                    SceneManager.GetActiveScene().name,
+                    SceneManager.GetActiveScene().buildIndex);
         }
 
         private async Task ClickDataManager()
@@ -101,8 +96,7 @@ namespace AppneuronUnity.Core.CoreModule
             var resultClickDtoList = _clickDataUnityManager.DetectDetaildRawTouchInformation();
             if (resultClickDtoList != null)
             {
-                await _clickDataUnityManager.ClickCalculater(resultClickDtoList,
-                    clickDataModelList);
+                await _clickDataUnityManager.ClickCalculater(resultClickDtoList);
             }
         }
     }

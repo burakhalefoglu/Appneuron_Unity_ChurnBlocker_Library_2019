@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.ModelData
+﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel
 {
     using System;
 

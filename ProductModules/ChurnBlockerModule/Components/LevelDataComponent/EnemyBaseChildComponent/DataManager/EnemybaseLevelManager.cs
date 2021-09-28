@@ -1,4 +1,4 @@
-﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.UnityManager
+﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.DataAccess;
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.Datamodel;
@@ -6,13 +6,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using UnityEngine;
-    using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using Zenject;
+    using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
-    /// <summary>
-    /// Defines the <see cref="EnemybaseLevelManager" />.
-    /// </summary>
     internal class EnemybaseLevelManager : IEnemybaseLevelManager
     {
         private readonly IEnemyBaseWithLevelDieDal _enemyBaseWithLevelDieDal;
@@ -24,6 +22,9 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
         private readonly IClientIdUnityManager _clientIdUnityManager;
 
         private readonly IDataCreationClient _dataCreationClient;
+
+        [Inject]
+        private readonly CoreHelper coreHelper;
 
         public EnemybaseLevelManager(IEnemyBaseWithLevelDieDal enemyBaseWithLevelDieDal,
             IDataCreationClient dataCreationClient,
@@ -77,11 +78,9 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
             int levelIndex,
             Vector3 transform)
         {
-            string filepath = ComponentsConfigs.LevelBaseDieDataPath;
-
             var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            var customerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+            var projectId = coreHelper.GetProjectInfo().ProjectID;
+            var customerId = coreHelper.GetProjectInfo().CustomerID;
 
             EnemyBaseWithLevelFailDataModel dataModel = new EnemyBaseWithLevelFailDataModel
             {
@@ -102,7 +101,7 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
                 if (!result)
                 {
                     string fileName = _cryptoServices.GenerateStringName(6);
-                    await _enemyBaseWithLevelDieDal.InsertAsync(filepath + fileName, dataModel);
+                    await _enemyBaseWithLevelDieDal.InsertAsync(fileName, dataModel);
                 }
             });
 
@@ -110,18 +109,19 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
 
         public async Task CheckLevelbaseDieAndSend()
         {
-            List<string> FolderList = ComponentsConfigs.GetSavedDataFilesNames(
-                ComponentsConfigs.SaveTypePath.LevelBaseDieDataModel);
+            List<string> FolderList = coreHelper.GetSavedDataFilesNames<EnemyBaseWithLevelFailDataModel>();
+            if (FolderList.Count == 0)
+                return;
             foreach (var fileName in FolderList)
             {
-                var dataModel = await _enemyBaseWithLevelDieDal.SelectAsync(ComponentsConfigs.LevelBaseDieDataPath + fileName);
+                var dataModel = await _enemyBaseWithLevelDieDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
                 dataModel, async (result) =>
                 {
                     if (result)
                     {
-                        await _enemyBaseWithLevelDieDal.DeleteAsync(ComponentsConfigs.LevelBaseDieDataPath + fileName);
+                        await _enemyBaseWithLevelDieDal.DeleteAsync(fileName);
 
                     }
                 });
@@ -137,8 +137,8 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
             int totalPowerUsage)
         {
             var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = ChurnBlockerSingletonConfigs.Instance.GetProjectID();
-            var customerId = ChurnBlockerSingletonConfigs.Instance.GetCustomerID();
+            var projectId = coreHelper.GetProjectInfo().ProjectID;
+            var customerId = coreHelper.GetProjectInfo().CustomerID;
 
             EnemyBaseEveryLoginLevelDatasModel dataModel = new EnemyBaseEveryLoginLevelDatasModel
             {
@@ -160,8 +160,7 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
                 if (!result)
                 {
                     string fileName = _cryptoServices.GenerateStringName(6);
-                    string filepath = ComponentsConfigs.EveryLoginLevelDatasPath + fileName;
-                    await _enemyBaseEveryLoginLevelDal.InsertAsync(filepath, dataModel);
+                    await _enemyBaseEveryLoginLevelDal.InsertAsync(fileName, dataModel);
                 }
             });
 
@@ -170,16 +169,18 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
 
         public async Task CheckEveryLoginLevelDatasAndSend()
         {
-            List<string> FolderList = ComponentsConfigs.GetSavedDataFilesNames(ComponentsConfigs.SaveTypePath.EveryLoginLevelDatasModel);
+            List<string> FolderList = coreHelper.GetSavedDataFilesNames<EnemyBaseEveryLoginLevelDatasModel>();
+            if (FolderList.Count == 0)
+                return;
             foreach (var fileName in FolderList)
             {
-                var dataModel = await _enemyBaseEveryLoginLevelDal.SelectAsync(ComponentsConfigs.EveryLoginLevelDatasPath + fileName);
+                var dataModel = await _enemyBaseEveryLoginLevelDal.SelectAsync(fileName);
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
                 dataModel, async (result) =>
                 {
                     if (result)
                     {
-                        await _enemyBaseEveryLoginLevelDal.DeleteAsync(ComponentsConfigs.EveryLoginLevelDatasPath + fileName);
+                        await _enemyBaseEveryLoginLevelDal.DeleteAsync(fileName);
 
                     }
                 });

@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using AppneuronUnity.Core.AuthModule.AuthComponent.UnityManager;
-using Appneuron.Zenject;
+using Zenject;
 using System.Threading.Tasks;
-using AppneuronUnity.Core.AuthModule.ClientIdComponent.UnityManager;
+using AppneuronUnity.Core.AuthModule.AuthComponent.DataManager;
+using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
 namespace AppneuronUnity.Core.AuthModule
 {
@@ -14,11 +14,6 @@ namespace AppneuronUnity.Core.AuthModule
 
         [Inject]
         private IClientIdUnityManager _clientIdUnityManager { get; set; }
-
-        private async void Awake()
-        {
-            await _clientIdUnityManager.SaveIdOnLocalStorage();
-        }
 
         private async void Start()
         {

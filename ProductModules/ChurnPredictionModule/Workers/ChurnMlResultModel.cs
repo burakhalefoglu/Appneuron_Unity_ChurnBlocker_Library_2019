@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AppneuronUnity.ProductModules.ChurnPrediction.WebSocketWorkers.ChurnMLResult.Model
+namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
 {
     internal class ChurnMlResultModel
     {
