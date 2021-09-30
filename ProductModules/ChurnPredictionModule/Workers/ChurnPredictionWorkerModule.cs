@@ -4,20 +4,15 @@ using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
 using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.InterstitialAd;
 using System.Threading.Tasks;
 using UnityEngine;
-using System.Collections.Generic;
 using AppneuronUnity.Core.Extentions;
-using System;
 using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer;
-using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers;
 using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
 {
-    [Serializable] public class MyDictionary1 : SerializableDictionary<string, int> { }
-
-
     public class ChurnPredictionWorkerModule : MonoBehaviour
     {
+
         [Inject]
         private IRemoteClient remoteClient;
 
@@ -33,13 +28,19 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
         [Inject]
         private IRemoteOfferUnityWorker remoteOfferUnityWorker;
 
-        public MyDictionary1 DefaultIAdvFrequencyStrategy;
+        public DefaultIAdvFrequencyStrategy defaultIAdvFrequencyStrategy;
 
+        private bool isChurnUser;
 
         private RemoteOfferModel remoteOfferModel;
 
+        public delegate Task OnIsChurnResult();
+
+        public event OnIsChurnResult IsChurnResult;
+
         private async void Start()
         {
+            isChurnUser = false;
             await interstielAdUnityWorker.GetInterstielFrequencyFromServer();
             await remoteOfferUnityWorker.GetRemoteOfferFromServer();
 
@@ -54,8 +55,9 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
                     Debug.Log(data.ThreeDayChurn);
                     if (data.ThreeDayChurn)
                     {
-                        DefaultIAdvFrequencyStrategy = (MyDictionary1)interstielAdUnityWorker.GetInterstielFrequency();
+                        defaultIAdvFrequencyStrategy = (DefaultIAdvFrequencyStrategy)interstielAdUnityWorker.GetInterstielFrequency();
                         remoteOfferModel = remoteOfferUnityWorker.GetRemoteOffer();
+                        IsChurnResult();
                     }
 
 
@@ -64,7 +66,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
 
         public SerializableDictionary<string, int> GetDefaultInterstielFrequency()
         {
-            return DefaultIAdvFrequencyStrategy;
+            return defaultIAdvFrequencyStrategy;
         }
 
         public RemoteOfferModel GetRemoteOffer()
@@ -82,9 +84,15 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
             }
             if (result.Data.ThreeDayChurn)
             {
-                DefaultIAdvFrequencyStrategy = (MyDictionary1)interstielAdUnityWorker.GetInterstielFrequency();
+                defaultIAdvFrequencyStrategy = (DefaultIAdvFrequencyStrategy)interstielAdUnityWorker.GetInterstielFrequency();
                 remoteOfferModel = remoteOfferUnityWorker.GetRemoteOffer();
             }
         }
+
+        public bool GetChurnResult()
+        {
+            return isChurnUser;
+        }
+
     }
 }

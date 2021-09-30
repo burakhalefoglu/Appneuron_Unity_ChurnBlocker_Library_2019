@@ -26,7 +26,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
         }
 
         public async Task StartListen()
-        {
+        { 
 
             await _remoteClient.SubscribeAsync<RemoteOfferModel>(_clientIdManager.GetPlayerID(),
                 (data) =>

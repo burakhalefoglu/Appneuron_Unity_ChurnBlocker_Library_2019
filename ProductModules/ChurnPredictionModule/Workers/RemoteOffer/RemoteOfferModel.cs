@@ -1,7 +1,6 @@
 ﻿
 using System;
 using UnityEngine;
-using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer
 {
@@ -10,8 +9,9 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
         public ProductModelDto[] ProductModelDtos { get; set; }
         public double FirstPrice { get; set; }
         public double LastPrice { get; set; }
+        public int OfferId { get; set; }
         public bool IsGift { get; set; }
-        public Texture GiftTexture { get; set; }
+        public Texture2D GiftTexture { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
 

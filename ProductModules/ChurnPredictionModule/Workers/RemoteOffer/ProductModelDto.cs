@@ -5,7 +5,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
     public class ProductModelDto
     {
         public string Name { get; set; }
-        public Texture Image { get; set; }
+        public Texture2D Image { get; set; }
         public double Count { get; set; }
     }
 }
