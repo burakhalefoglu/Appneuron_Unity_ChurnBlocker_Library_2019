@@ -3,38 +3,27 @@
     using AppneuronUnity.Core.Libraries.CryptoEffortless;
     using System;
     using System.Linq;
-using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
 
-    /// <summary>
-    /// Defines the <see cref="EfforlessCryptoServices" />.
-    /// </summary>
     internal class EfforlessCryptoServices : ICryptoServices
     {
-        /// <summary>
-        /// The DeCrypto.
-        /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        byte[] key = Bytes.GenerateKey();
+        byte[] iv = Bytes.GenerateIV();
+
         public string DeCrypto(string value)
         {
-            return null;
+            string encrypted = StringHash.Encrypt(value, key, iv);
+
+            return encrypted;
         }
 
-        /// <summary>
-        /// The EnCrypto.
-        /// </summary>
-        /// <param name="longString">The longString<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public string EnCrypto(int longString)
+        public string EnCrypto(string encrypted)
         {
-            return null;
+            string decrypted = StringHash.Decrypt(encrypted, key, iv);
+
+            return decrypted;
         }
 
-        /// <summary>
-        /// The GetRandomHexNumber.
-        /// </summary>
-        /// <param name="digits">The digits<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
         public string GetRandomHexNumber(int digits)
         {
             Random random = new Random();
@@ -46,11 +35,6 @@ using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
             return result + random.Next(16).ToString("X");
         }
 
-        /// <summary>
-        /// The GenerateStringName.
-        /// </summary>
-        /// <param name="longString">The longString<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
         public string GenerateStringName(int longString)
         {
             string salt = StringHash.CreateSalt(longString);

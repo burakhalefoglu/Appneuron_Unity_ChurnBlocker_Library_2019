@@ -17,68 +17,76 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
            string websocketServer,
            int websocketPort)
         {
-            if (webSocket == null || !webSocket.IsConnected)
+            return await Task.Run(async () =>
             {
-                webSocket = SubscribeChannel<T>(websocketServer,
-                websocketPort,
-                userId);
-                this.userId = userId;
-                this.host = websocketServer;
-                this.port = websocketPort;
-            }
+                if (webSocket == null || !webSocket.IsConnected)
+                {
+                    webSocket = await SubscribeChannel<T>(websocketServer,
+                    websocketPort,
+                    userId);
+                    this.userId = userId;
+                    this.host = websocketServer;
+                    this.port = websocketPort;
+                }
 
-            return await Task.FromResult(webSocket);
-
+                return webSocket;
+            });
+           
         }
 
 
-        private WebSocketSharp SubscribeChannel<T>(string host, int port, string clientId)
+        private async Task<WebSocketSharp> SubscribeChannel<T>(string host, int port, string clientId)
         {
-
-            var ChannelName = typeof(T).Name;
-            var ws = new WebSocketSharp($"ws://{host}:{port}/" + ChannelName + "?clientid=" + clientId);
-
-            try
+            return await Task.Run( async () =>
             {
-                ws.OnOpen += Ws_OnOpen;
-                ws.OnError += Ws_OnError;
-                ws.OnClose += Ws_OnClose<T>;
+                var ChannelName = typeof(T).Name;
+                var ws = new WebSocketSharp($"ws://{host}:{port}/" + ChannelName + "?clientid=" + clientId);
 
-                ws.Connect();
-                ws.Send("I Am Client...");
+                try
+                {
+                    //TODO: after log open it.
+                    //ws.OnOpen += Ws_OnOpen;
+                    //ws.OnError += Ws_OnError;
+                    ws.OnClose += Ws_OnClose<T>;
 
-            }
-            catch (Exception exception)
-            {
-                //TODO: LOG message;
-                Debug.Log(exception.Message);
-                //Thread.Sleep(5000);
-                //webSocket = SubscribeChannel<T>(host,
-                //port,
-                //clientId);
-            }
-            return ws;
+                    ws.Connect();
+                    ws.Send("I Am Client...");
+
+                }
+                catch (Exception exception)
+                {
+                    //TODO: LOG message;
+                    Debug.Log(exception.Message);
+                    Thread.Sleep(50000);
+                    webSocket = await SubscribeChannel<T>(host,
+                    port,
+                    clientId);
+                }
+                return ws;
+            });
+
+          
         }
 
-        private void Ws_OnClose<T>(object sender, CloseEventArgs e)
+        private async void Ws_OnClose<T>(object sender, CloseEventArgs e)
         {
             //TODO: LOG message
             Debug.Log("Connection Closed. Reconnecting..." + e.Reason);
-            //Thread.Sleep(5000);
-            //webSocket = SubscribeChannel<T>(this.host,
-            //                  this.port,
-            //                  this.userId);
+            Thread.Sleep(50000);
+            webSocket = await SubscribeChannel<T>(this.host,
+                              this.port,
+                              this.userId);
         }
 
-        private void Ws_OnError(object sender, ErrorEventArgs e)
-        {
-            //TODO: LOG message
-            Debug.Log("Error: " + e.Message);
-        }
+        //private async void Ws_OnError(object sender, ErrorEventArgs e)
+        //{
+        //    //TODO: LOG message
+        //    Debug.Log("Error: " + e.Message);
+        //}
 
-        private void Ws_OnOpen(object sender, EventArgs e)
-        {
-            Debug.Log("Opened: " + e);
-        }
+        //private async void Ws_OnOpen(object sender, EventArgs e)
+        //{
+        //    Debug.Log("Opened: " + e);
+        //}
     }
 }

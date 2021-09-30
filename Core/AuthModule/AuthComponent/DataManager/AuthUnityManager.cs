@@ -59,9 +59,6 @@
             var result = await _restClientServices.PostAsync<JwtResponseModel>
                 (RequestPath,
                 JwtRequestModel);
-            if (result == null)
-                return;
-
             if (result.Success)
             {
                 await SaveTokenOnfile(result.Data.Data);

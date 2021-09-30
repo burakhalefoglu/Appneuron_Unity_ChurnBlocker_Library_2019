@@ -3,7 +3,6 @@ using UnityEngine;
 using Zenject;
 using System.Threading.Tasks;
 using AppneuronUnity.Core.AuthModule.AuthComponent.DataManager;
-using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 
 namespace AppneuronUnity.Core.AuthModule
 {
@@ -11,9 +10,6 @@ namespace AppneuronUnity.Core.AuthModule
     {
         [Inject]
         private IAuthUnityManager _authUnityManager { get; set; }
-
-        [Inject]
-        private IClientIdUnityManager _clientIdUnityManager { get; set; }
 
         private async void Start()
         {

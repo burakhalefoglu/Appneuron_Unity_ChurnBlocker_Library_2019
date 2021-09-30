@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
 using AppneuronUnity.Core.AuthModule.AuthComponent.DataModel.Jwt;
+using UnityEngine;
 
 // Doc: https://github.com/burakhalefoglu/unitywebrequest-tutorial
 
@@ -28,7 +29,7 @@ namespace AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity
                     while (!operation.isDone)
                         await Task.Yield();
 
-                    if (!www.isDone)
+                    if (www.isNetworkError)
                         return new ErrorResult((int)www.responseCode);
 
                     return new SuccessResult((int)www.responseCode);
@@ -57,10 +58,9 @@ namespace AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity
 
                     while (!operation.isDone)
                         await Task.Yield();
-
                     var userData = JsonMapper.ToObject<T>(www.downloadHandler.text);
-                    if (!www.isDone)
-                        return new ErrorDataResult<T>(userData, statuseCode: (int)www.responseCode);
+                    if (www.isNetworkError || userData == null)
+                        return new ErrorDataResult<T>(statuseCode: (int)www.responseCode);
 
                     return new SuccessDataResult<T>(userData, statuseCode: (int)www.responseCode);
 
@@ -86,7 +86,7 @@ namespace AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity
                     while (!operation.isDone)
                         await Task.Yield();
 
-                    if (www.isDone)
+                    if (www.isNetworkError)
                     {
                         return new SuccessResult();
                     }
@@ -118,10 +118,9 @@ namespace AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity
 
                     while (!operation.isDone)
                         await Task.Yield();
-
                     var userData = JsonMapper.ToObject<T>(www.downloadHandler.text);
-                    if (!www.isDone)
-                        return new ErrorDataResult<T>(userData, statuseCode: (int)www.responseCode);
+                    if (www.isNetworkError || userData == null)
+                        return new ErrorDataResult<T>(statuseCode: (int)www.responseCode);
 
                     return new SuccessDataResult<T>(userData, statuseCode: (int)www.responseCode);
 
@@ -154,8 +153,8 @@ namespace AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity
                         await Task.Yield();
 
                     var userData = JsonMapper.ToObject<T>(www.downloadHandler.text);
-                    if (!www.isDone)
-                        return new ErrorDataResult<T>(userData, statuseCode: (int)www.responseCode);
+                    if (www.isNetworkError || userData == null)
+                        return new ErrorDataResult<T>(statuseCode: (int)www.responseCode);
 
                     return new SuccessDataResult<T>(userData, statuseCode: (int)www.responseCode);
 
