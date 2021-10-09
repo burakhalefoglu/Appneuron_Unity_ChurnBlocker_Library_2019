@@ -6,7 +6,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
     /// <summary>
     /// Defines the <see cref="BSSwipeScreenDataDal" />.
     /// </summary>
-    internal class BSSwipeScreenDataDal : BinaryTypeRepositoryBase<SwipeDataModel>, ISwipeScreenDataDal
+    internal class BSSwipeScreenDataDal : BinaryTypeRepositoryBase<ScreenSwipeDataModel>, ISwipeScreenDataDal
     {
     }
 }

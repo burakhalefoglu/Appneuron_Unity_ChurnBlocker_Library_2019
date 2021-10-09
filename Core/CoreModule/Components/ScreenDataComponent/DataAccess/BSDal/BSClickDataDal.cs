@@ -6,7 +6,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
     /// <summary>
     /// Defines the <see cref="BSClickDataDal" />.
     /// </summary>
-    internal class BSClickDataDal : BinaryTypeRepositoryBase<ClickDataModel>, IClickDataDal
+    internal class BSClickDataDal : BinaryTypeRepositoryBase<ScreenClickDataModel>, IClickDataDal
     {
     }
 }

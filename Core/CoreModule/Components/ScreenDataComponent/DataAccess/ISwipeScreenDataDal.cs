@@ -6,7 +6,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
     /// <summary>
     /// Defines the <see cref="ISwipeScreenDataDal" />.
     /// </summary>
-    internal interface ISwipeScreenDataDal : IRepositoryService<SwipeDataModel>
+    internal interface ISwipeScreenDataDal : IRepositoryService<ScreenSwipeDataModel>
     {
     }
 }

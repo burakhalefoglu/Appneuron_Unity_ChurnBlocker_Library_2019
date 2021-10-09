@@ -44,6 +44,7 @@
                 var dataModel = await _advEventDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                    coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -75,6 +76,7 @@
             };
 
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             advEventDataModel, async (result) =>
             {
 

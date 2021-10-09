@@ -8,7 +8,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
     /// </summary>
     internal interface ISwipeDataUnityManager
     {
-        Task SaveLocalData(SwipeDataModel swipeDataModel);
+        Task SaveLocalData(ScreenSwipeDataModel swipeDataModel);
         Task CheckSwipeDataFileAndSendData();
         Task CalculateSwipeDirection(SwipeModelDto swipeModelDto,
             string sceneName, int sceneIndex);

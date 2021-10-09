@@ -30,13 +30,14 @@
 
         public async Task SendMessage()
         {
-            var resultLocation = await _restClientService.GetAsync<LocationModel>
+            var resultLocation = await _restClientService.GetAsync<LocationDataModel>
             ("https://extreme-ip-lookup.com/json");
             var locationData = resultLocation.Data;
             locationData.ClientId = _clientIdUnityManager.GetPlayerID();
             locationData.ProjectId =coreHelper.GetProjectInfo().ProjectID;
             locationData.CustomerId = coreHelper.GetProjectInfo().CustomerID;
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             locationData, async (result) =>
             {
                 if (!result)

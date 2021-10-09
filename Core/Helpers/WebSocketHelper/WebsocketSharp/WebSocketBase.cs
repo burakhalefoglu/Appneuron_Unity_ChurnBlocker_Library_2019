@@ -10,10 +10,12 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
     {
         private WebSocketSharp webSocket;
         private string userId { get; set; }
+        private string projectId { get; set; }
         private string host { get; set; }
         private int port { get; set; }
 
         public async Task<WebSocketSharp> ListenServerAsync<T>(string userId,
+           string projectId,
            string websocketServer,
            int websocketPort)
         {
@@ -23,8 +25,9 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
                 {
                     webSocket = await SubscribeChannel<T>(websocketServer,
                     websocketPort,
-                    userId);
+                    userId, projectId);
                     this.userId = userId;
+                    this.projectId = projectId;
                     this.host = websocketServer;
                     this.port = websocketPort;
                 }
@@ -35,12 +38,12 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
         }
 
 
-        private async Task<WebSocketSharp> SubscribeChannel<T>(string host, int port, string clientId)
+        private async Task<WebSocketSharp> SubscribeChannel<T>(string host, int port, string clientId, string projectId)
         {
             return await Task.Run( async () =>
             {
                 var ChannelName = typeof(T).Name;
-                var ws = new WebSocketSharp($"ws://{host}:{port}/" + ChannelName + "?clientid=" + clientId);
+                var ws = new WebSocketSharp($"ws://{host}:{port}/" + ChannelName + "?clientId=" + clientId + "&projectId=" + projectId);
 
                 try
                 {
@@ -60,7 +63,7 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
                     Thread.Sleep(50000);
                     webSocket = await SubscribeChannel<T>(host,
                     port,
-                    clientId);
+                    clientId, projectId);
                 }
                 return ws;
             });
@@ -75,7 +78,8 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
             Thread.Sleep(50000);
             webSocket = await SubscribeChannel<T>(this.host,
                               this.port,
-                              this.userId);
+                              this.userId,
+                              this.projectId);
         }
 
         //private async void Ws_OnError(object sender, ErrorEventArgs e)

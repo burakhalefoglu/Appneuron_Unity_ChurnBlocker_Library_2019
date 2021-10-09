@@ -47,6 +47,7 @@
             dataModel.ProjectId = projectId;
 
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -66,6 +67,7 @@
             {
                 var dataModel = await _inventoryDal.SelectAsync(fileName);
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)

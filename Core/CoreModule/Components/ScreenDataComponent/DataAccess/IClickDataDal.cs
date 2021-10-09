@@ -6,7 +6,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
     /// <summary>
     /// Defines the <see cref="IClickDataDal" />.
     /// </summary>
-    internal interface IClickDataDal : IRepositoryService<ClickDataModel>
+    internal interface IClickDataDal : IRepositoryService<ScreenClickDataModel>
     {
     }
 }

@@ -59,13 +59,13 @@
                 CustomerId = customerId,
                 levelName = levelName,
                 levelIndex = levelIndex,
-                DifficultyLevel = 0,
                 SessionStartTime = levelBaseGameSessionStart,
                 SessionFinishTime = levelBaseGameSessionFinish,
                 SessionTimeMinute = minutes
             };
 
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -86,6 +86,7 @@
                 var dataModel = await _levelBaseSessionDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -117,6 +118,7 @@
 
 
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -137,6 +139,7 @@
                 var dataModel = await _gameSessionEveryLoginDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)

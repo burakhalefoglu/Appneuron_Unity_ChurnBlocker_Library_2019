@@ -29,7 +29,7 @@
 
         private Touch theTouch;
 
-        List<ClickDataModel> clickDataModelList;
+        List<ScreenClickDataModel> clickDataModelList;
 
         public ClickDataUnityManager(IDataCreationClient dataCreationClient,
             IClickDataDal clickDataDal,
@@ -40,7 +40,7 @@
             _clickDataDal = clickDataDal;
             _cryptoServices = cryptoServices;
             _clientIdUnityManager = clientIdUnityManager;
-            clickDataModelList = new List<ClickDataModel>();
+            clickDataModelList = new List<ScreenClickDataModel>();
         }
 
         public List<ClickDataDto> DetectDetaildRawTouchInformation()
@@ -72,7 +72,7 @@
             return new Vector2(position.x / Screen.width, position.y / Screen.height);
         }
 
-        public async Task SaveLocalData(ClickDataModel clickDataModel)
+        public async Task SaveLocalData(ScreenClickDataModel clickDataModel)
         {
             string fileName = _cryptoServices.GenerateStringName(6);
             await _clickDataDal.InsertAsync(fileName, clickDataModel);
@@ -80,7 +80,7 @@
 
         public async Task CheckClickDataFileAndSendData()
         {
-            List<string> FolderNameList = coreHelper.GetSavedDataFilesNames<ClickDataModel>();
+            List<string> FolderNameList = coreHelper.GetSavedDataFilesNames<ScreenClickDataModel>();
             if (FolderNameList.Count == 0)
                 return;
             foreach (var fileName in FolderNameList)
@@ -88,6 +88,7 @@
                 var dataModel = await _clickDataDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -126,6 +127,7 @@
                             clickDataModel.LevelIndex = SceneManager.GetActiveScene().buildIndex;
 
                             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                            coreHelper.GetProjectInfo().ProjectID,
                             clickDataModel, async (result) =>
                             {
                                 if (result)
@@ -141,7 +143,7 @@
                     }
                     else
                     {
-                        clickDataModelList.Add(new ClickDataModel
+                        clickDataModelList.Add(new ScreenClickDataModel
                         {
                             TabCount = r.TabCount,
                             FingerID = r.FingerID,

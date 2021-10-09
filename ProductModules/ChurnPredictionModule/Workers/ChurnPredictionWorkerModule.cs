@@ -7,6 +7,7 @@ using UnityEngine;
 using AppneuronUnity.Core.Extentions;
 using AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer;
 using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
 {
@@ -27,6 +28,9 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
 
         [Inject]
         private IRemoteOfferUnityWorker remoteOfferUnityWorker;
+
+        [Inject]
+        private readonly CoreHelper coreHelper;
 
         public DefaultIAdvFrequencyStrategy defaultIAdvFrequencyStrategy;
 
@@ -50,6 +54,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
             await remoteOfferUnityWorker.StartListen();
 
             await remoteClient.SubscribeAsync<ChurnMlResultModel>(clientIdManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 (data) =>
                 {
                     Debug.Log(data.ThreeDayChurn);

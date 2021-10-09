@@ -4,6 +4,8 @@ using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
 using System.Threading.Tasks;
 using UnityEngine;
 using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
+using Zenject;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer
 {
@@ -15,6 +17,9 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
 
 
         private RemoteOfferModel remoteOfferModel;
+
+        [Inject]
+        private readonly CoreHelper coreHelper;
 
         public RemoteOfferUnityWorker(IRemoteClient remoteClient,
             IClientIdUnityManager clientIdManager,
@@ -29,6 +34,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
         { 
 
             await _remoteClient.SubscribeAsync<RemoteOfferModel>(_clientIdManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 (data) =>
                 {
                     Debug.Log(data.FirstPrice);

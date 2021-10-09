@@ -5,14 +5,8 @@
     /// </summary>
     public class TemporaryAbility
     {
-        /// <summary>
-        /// Gets or sets the AbilityType.
-        /// </summary>
-        public string AbilityType { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Count.
-        /// </summary>
+        public string AbilityType { get; set; }
         public int Count { get; set; }
     }
 }

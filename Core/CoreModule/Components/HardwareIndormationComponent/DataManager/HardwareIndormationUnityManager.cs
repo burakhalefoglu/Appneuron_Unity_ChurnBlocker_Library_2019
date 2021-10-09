@@ -44,6 +44,7 @@
             hardwareInformation.SystemMemorySize = SystemInfo.systemMemorySize;
 
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             hardwareInformation, (result) =>
             {
                 if (!result)

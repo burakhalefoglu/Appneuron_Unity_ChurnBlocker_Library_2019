@@ -11,7 +11,7 @@ using AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataModel;
     {
         List<ClickDataDto> DetectDetaildRawTouchInformation();
 
-        Task SaveLocalData(ClickDataModel clickDataModel);
+        Task SaveLocalData(ScreenClickDataModel clickDataModel);
 
         Task CheckClickDataFileAndSendData();
 

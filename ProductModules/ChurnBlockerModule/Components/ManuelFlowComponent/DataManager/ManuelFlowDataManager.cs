@@ -45,6 +45,7 @@ namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.ManuelFlow
                 var dataModel = await _manuelFlowDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -64,6 +65,7 @@ namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.ManuelFlow
             manuelFlowModel.ProjectId = coreHelper.GetProjectInfo().ProjectID;
 
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             manuelFlowModel, async (result) =>
             {
 

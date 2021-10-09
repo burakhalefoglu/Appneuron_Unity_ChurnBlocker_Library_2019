@@ -45,6 +45,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBe
                 var dataModel = await _offerBehaviorDal.SelectAsync(fileName);
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -75,16 +76,18 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBe
         public async Task SendAdvEventDataAsync(int OfferId,
             bool isBuyOffer)
         {
+            var isBought = isBuyOffer == true ? 1 : 0;
             OfferBehaviorModel dataModel = new OfferBehaviorModel
             {
                 ClientId = _clientIdUnityManager.GetPlayerID(),
                 ProjectId = coreHelper.GetProjectInfo().ProjectID,
                 CustomerId = coreHelper.GetProjectInfo().CustomerID,
                 OfferId = OfferId,
-                isBuyOffer = isBuyOffer
+                IsBuyOffer = isBought
             };
 
             await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+            coreHelper.GetProjectInfo().ProjectID,
             dataModel, async (result) =>
             {
                     await CheckFileAndSendDataAsync();

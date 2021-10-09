@@ -2,6 +2,7 @@
 using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
 using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
 using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.DifficultyComponent.Helper;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
 using AppneuronUnity.ProductModules.ChurnBlockerModule.WeboscketWorkers.DifficultyResult.Models;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -18,6 +19,9 @@ namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyRes
         [Inject]
         private readonly DifficultyHelper difficultyHelper;
 
+        [Inject]
+        private readonly CoreHelper coreHelper;
+
         public DifficultyResultUnityWorker(IRemoteClient remoteClient,
             IClientIdUnityManager clientIdManager,
             IRestClientServices restApiClient)
@@ -31,6 +35,7 @@ namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyRes
         {
 
             await _remoteClient.SubscribeAsync<DifficultyServerResultModel>(_clientIdManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 async (data) =>
                 {
                     Debug.Log(data.CenterOfDifficultyLevel);

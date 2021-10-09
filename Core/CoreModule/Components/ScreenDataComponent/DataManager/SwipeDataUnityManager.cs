@@ -28,7 +28,7 @@
         [Inject]
         private readonly CoreHelper coreHelper;
 
-        SwipeDataModel swipeDataModel;
+        ScreenSwipeDataModel swipeDataModel;
 
         public SwipeDataUnityManager(IDataCreationClient dataCreationClient,
             ISwipeScreenDataDal swipeScreenDataDal,
@@ -39,10 +39,10 @@
             _swipeScreenDataDal = swipeScreenDataDal;
             _cryptoServices = cryptoServices;
             _clientIdUnityManager = clientIdUnityManager;
-            swipeDataModel = new SwipeDataModel();
+            swipeDataModel = new ScreenSwipeDataModel();
         }
 
-        public async Task SaveLocalData(SwipeDataModel swipeDataModel)
+        public async Task SaveLocalData(ScreenSwipeDataModel swipeDataModel)
         {
             string fileName = _cryptoServices.GenerateStringName(6);
             await _swipeScreenDataDal.InsertAsync(fileName, swipeDataModel);
@@ -50,7 +50,7 @@
 
         public async Task CheckSwipeDataFileAndSendData()
         {
-            List<string> FolderNameList = coreHelper.GetSavedDataFilesNames<SwipeDataModel>();
+            List<string> FolderNameList = coreHelper.GetSavedDataFilesNames<ScreenSwipeDataModel>();
             if (FolderNameList.Count == 0)
                 return;
             foreach (var fileName in FolderNameList)
@@ -59,6 +59,7 @@
 
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -84,6 +85,7 @@
             {
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 swipeDataModel, async (result) =>
                 {
                     if (!result)
@@ -116,6 +118,7 @@
             {
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 swipeDataModel, async (result) =>
                 {
                     if (!result)
@@ -142,6 +145,7 @@
             {
 
                 await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
+                coreHelper.GetProjectInfo().ProjectID,
                 swipeDataModel, async (result) =>
                 {
                     if (!result)
