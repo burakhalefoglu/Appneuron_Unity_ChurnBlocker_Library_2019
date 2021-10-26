@@ -5,7 +5,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
 {
     public class RemoteOfferModel
     {
-        public ProductModel[] ProductModelDtos { get; set; }
+        public ProductModel[] ProductModels { get; set; }
         public float FirstPrice { get; set; }
         public float LastPrice { get; set; }
         public int OfferId { get; set; }

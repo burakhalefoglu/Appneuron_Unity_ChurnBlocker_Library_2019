@@ -12,7 +12,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.IoC.Zenject
     {
         public override void InstallBindings()
         {
-            Container.Bind<IInterstielAdUnityWorker>().To<InterstielAdUnityWorker>().AsSingle();
+            Container.Bind<IInterstitialAdUnityWorker>().To<InterstitialAdUnityWorker>().AsSingle();
             Container.Bind<IRemoteOfferUnityWorker>().To<RemoteOfferUnityWorker>().AsSingle();
 
             Container.Bind<IOfferBehaviorDal>().To<BSOfferBehaviorDal>().AsSingle();

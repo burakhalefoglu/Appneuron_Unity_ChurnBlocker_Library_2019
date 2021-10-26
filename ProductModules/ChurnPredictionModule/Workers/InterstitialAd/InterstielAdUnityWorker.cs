@@ -9,9 +9,9 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.InterstitialAd
 {
-    internal class InterstielAdUnityWorker : IInterstielAdUnityWorker
+    internal class InterstitialAdUnityWorker : IInterstitialAdUnityWorker
     {
-        private SerializableDictionary<string,int> InterstielFrequency;
+        private SerializableDictionary<string,int> InterstitialFrequency;
 
         private readonly IRemoteClient _remoteClient;
         private readonly IClientIdUnityManager _clientIdManager;
@@ -20,7 +20,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.Interstiti
         [Inject]
         private readonly CoreHelper coreHelper;
 
-        public InterstielAdUnityWorker(IRemoteClient remoteClient,
+        public InterstitialAdUnityWorker(IRemoteClient remoteClient,
             IClientIdUnityManager clientIdManager,
             IRestClientServices restApiClient)
         {
@@ -38,23 +38,23 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.Interstiti
                     Debug.Log(data.IsAdvSettingsActive);
                     if (data.IsAdvSettingsActive)
                     {
-                        InterstielFrequency = data.AdvFrequencyStrategies;
+                        InterstitialFrequency = data.AdvFrequencyStrategies;
 
                     }
                 });
         }
 
-        public async Task GetInterstielFrequencyFromServer()
+        public async Task GetInterstitialFrequencyFromServer()
         {
             //TODO: Remote adsettings linki eklenecek.
             var result = await _restApiClient.GetAsync<InterstielAdModel>("https://jsonplaceholder.typicode.com/posts");
             if(result.Data != null)
-                InterstielFrequency = result.Data.AdvFrequencyStrategies;
+                InterstitialFrequency = result.Data.AdvFrequencyStrategies;
         }
 
-        public SerializableDictionary<string,int> GetInterstielFrequency()
+        public SerializableDictionary<string,int> GetInterstitialFrequency()
         {
-            return InterstielFrequency;
+            return InterstitialFrequency;
         }
     }
 }
