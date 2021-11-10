@@ -36,7 +36,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
 
         private bool isChurnUser;
 
-        private RemoteOfferModel remoteOfferModel;
+        private RemoteOfferEventModel remoteOfferModel;
 
         public delegate Task OnIsChurnResult();
 
@@ -74,7 +74,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
             return defaultIAdvFrequencyStrategy;
         }
 
-        public RemoteOfferModel GetRemoteOffer()
+        public RemoteOfferEventModel GetRemoteOffer()
         {
             return remoteOfferModel;
         }

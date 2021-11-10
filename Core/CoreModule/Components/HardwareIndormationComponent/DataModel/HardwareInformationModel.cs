@@ -4,7 +4,7 @@ using System;
 namespace AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataModel
 {
 
-    internal class HardwareIndormationModel: IEntity
+    internal class HardwareInformationModel : IEntity
     {
 
         public string ClientId { get; set; }

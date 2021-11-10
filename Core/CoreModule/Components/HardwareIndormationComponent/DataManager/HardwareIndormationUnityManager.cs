@@ -26,7 +26,7 @@
 
         public async Task SendData()
         {
-            var hardwareInformation = new HardwareIndormationModel();
+            var hardwareInformation = new HardwareInformationModel();
             hardwareInformation.ClientId = _clientIdUnityManager.GetPlayerID();
             hardwareInformation.ProjectId = coreHelper.GetProjectInfo().ProjectID;
             hardwareInformation.CustomerId = coreHelper.GetProjectInfo().CustomerID;

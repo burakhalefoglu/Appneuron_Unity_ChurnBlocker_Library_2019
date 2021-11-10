@@ -3,7 +3,7 @@ using System;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffer
 {
-    public class RemoteOfferModel
+    public class RemoteOfferEventModel
     {
         public ProductModel[] ProductModels { get; set; }
         public float FirstPrice { get; set; }

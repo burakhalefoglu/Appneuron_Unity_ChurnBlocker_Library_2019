@@ -7,7 +7,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
     {
         Task StartListen();
         Task GetRemoteOfferFromServer();
-        RemoteOfferModel GetRemoteOffer();
+        RemoteOfferEventModel GetRemoteOffer();
 
     }
 }

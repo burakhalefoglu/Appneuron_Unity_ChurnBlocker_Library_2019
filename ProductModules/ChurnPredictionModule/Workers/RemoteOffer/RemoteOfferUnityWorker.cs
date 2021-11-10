@@ -16,7 +16,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
         private readonly IRestClientServices _restApiClient;
 
 
-        private RemoteOfferModel remoteOfferModel;
+        private RemoteOfferEventModel remoteOfferModel;
 
         [Inject]
         private readonly CoreHelper coreHelper;
@@ -33,7 +33,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
         public async Task StartListen()
         { 
 
-            await _remoteClient.SubscribeAsync<RemoteOfferModel>(_clientIdManager.GetPlayerID(),
+            await _remoteClient.SubscribeAsync<RemoteOfferEventModel>(_clientIdManager.GetPlayerID(),
                 coreHelper.GetProjectInfo().ProjectID,
                 (data) =>
                 {
@@ -45,12 +45,12 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.RemoteOffe
         public async Task GetRemoteOfferFromServer()
         {
             //TODO: Burada remote link eklenecek.
-            var result = await _restApiClient.GetAsync<RemoteOfferModel>("https://jsonplaceholder.typicode.com/posts");
+            var result = await _restApiClient.GetAsync<RemoteOfferEventModel>("https://jsonplaceholder.typicode.com/posts");
             if(result.Data != null)
                 remoteOfferModel = result.Data;
         }
 
-        public RemoteOfferModel GetRemoteOffer()
+        public RemoteOfferEventModel GetRemoteOffer()
         {
             return remoteOfferModel;
         }

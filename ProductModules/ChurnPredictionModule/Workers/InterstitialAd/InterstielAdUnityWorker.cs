@@ -31,7 +31,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.Interstiti
 
         public async Task StartListen()
         {
-            await _remoteClient.SubscribeAsync<InterstielAdModel>(_clientIdManager.GetPlayerID(),
+            await _remoteClient.SubscribeAsync<InterstitialAdEventModel>(_clientIdManager.GetPlayerID(),
                 coreHelper.GetProjectInfo().ProjectID,
                 (data) =>
                 {
@@ -47,7 +47,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.Interstiti
         public async Task GetInterstitialFrequencyFromServer()
         {
             //TODO: Remote adsettings linki eklenecek.
-            var result = await _restApiClient.GetAsync<InterstielAdModel>("https://jsonplaceholder.typicode.com/posts");
+            var result = await _restApiClient.GetAsync<InterstitialAdEventModel>("https://jsonplaceholder.typicode.com/posts");
             if(result.Data != null)
                 InterstitialFrequency = result.Data.AdvFrequencyStrategies;
         }
