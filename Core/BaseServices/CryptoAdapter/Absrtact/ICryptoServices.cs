@@ -4,6 +4,7 @@
     internal interface ICryptoServices
     {
         string GetRandomHexNumber(int digits);
+        long GetRandomNumber();
 
         string EnCrypto(string encrypted);
 

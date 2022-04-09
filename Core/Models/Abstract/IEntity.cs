@@ -5,9 +5,9 @@
     /// </summary>
     internal interface IEntity
     {
-        string ClientId { get; set; }
-        string ProjectId { get; set; }
-        string CustomerId { get; set; }
+        long ClientId { get; set; }
+        long ProjectId { get; set; }
+        long CustomerId { get; set; }
 
     }
 }

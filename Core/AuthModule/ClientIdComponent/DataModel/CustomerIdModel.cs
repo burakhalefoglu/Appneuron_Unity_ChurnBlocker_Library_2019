@@ -11,6 +11,6 @@
         /// <summary>
         /// Gets or sets the _id.
         /// </summary>
-        public string _id { get; set; }
+        public long Id { get; set; }
     }
 }

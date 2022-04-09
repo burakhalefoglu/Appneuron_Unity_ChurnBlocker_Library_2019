@@ -7,11 +7,11 @@
     internal class ScreenSwipeDataModel: IEntity
     {
 
-        public string ClientId { get; set; }
+        public long ClientId { get; set; }
 
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
-        public string CustomerId { get; set; }
+        public long CustomerId { get; set; }
 
         public int SwipeDirection { get; set; }
 

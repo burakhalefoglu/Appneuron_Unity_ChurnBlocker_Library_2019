@@ -13,6 +13,6 @@
             string levelName,
             int levelIndex,
             float GameSecond,
-            string clientId);
+            long clientId);
     }
 }

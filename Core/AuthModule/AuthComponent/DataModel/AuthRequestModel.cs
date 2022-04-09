@@ -10,16 +10,16 @@
         /// <summary>
         /// Gets or sets the ClientId.
         /// </summary>
-        public string ClientId { get; set; }
+        public long ClientId { get; set; }
 
         /// <summary>
         /// Gets or sets the ProjectId.
         /// </summary>
-        public string ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         /// <summary>
         /// Gets or sets the CustomerId.
         /// </summary>
-        public string CustomerId { get; set; }
+        public long CustomerId { get; set; }
     }
 }

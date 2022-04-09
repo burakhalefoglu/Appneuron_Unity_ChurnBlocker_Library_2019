@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager
+﻿using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Collections.Generic;
@@ -58,8 +60,8 @@
                 var dataModel = await _swipeScreenDataDal.SelectAsync(fileName);
 
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -75,17 +77,17 @@
             string scenemName,
             int sceneIndex)
         {
-            swipeDataModel.ClientId = _clientIdUnityManager.GetPlayerID();
-            swipeDataModel.ProjectId = coreHelper.GetProjectInfo().ProjectID;
-            swipeDataModel.CustomerId = coreHelper.GetProjectInfo().CustomerID;
+            swipeDataModel.ClientId = await _clientIdUnityManager.GetPlayerIdAsync();
+            swipeDataModel.ProjectId = coreHelper.GetProjectInfo().ProjectId;
+            swipeDataModel.CustomerId = coreHelper.GetProjectInfo().CustomerId;
             swipeDataModel.LevelName = scenemName;
             swipeDataModel.LevelIndex = sceneIndex;
 
             if (swipeModelDto == null && swipeDataModel.SwipeDirection != 0)
             {
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 swipeDataModel, async (result) =>
                 {
                     if (!result)
@@ -117,8 +119,8 @@
             if (swipeModelDto.SwipeDirection == 0 && swipeDataModel.SwipeDirection != 0)
             {
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 swipeDataModel, async (result) =>
                 {
                     if (!result)
@@ -144,8 +146,8 @@
             if (swipeModelDto.SwipeDirection != swipeDataModel.SwipeDirection)
             {
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 swipeDataModel, async (result) =>
                 {
                     if (!result)
@@ -203,7 +205,7 @@
                     {
                         LocX = FormatFingerPosition(theTouch.position).x,
                         LocY = FormatFingerPosition(theTouch.position).y,
-                        SwipeDirection = y > 0 ? 2 : 3
+                        SwipeDirection = y > 0 ? 3 : 4
                     };
                 }
             }

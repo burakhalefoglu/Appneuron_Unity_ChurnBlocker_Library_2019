@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataManager
+﻿using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System;
@@ -45,8 +47,8 @@
             {
                 var dataModel = await _buyingEventDal.SelectAsync(fileName);
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -62,13 +64,13 @@
             string levelName,
             int levelIndex,
             float GameSecond,
-            string clientId)
+            long clientId)
         {
             BuyingEventDataModel dataModel = new BuyingEventDataModel
             {
                 ClientId = clientId,
-                ProjectId = coreHelper.GetProjectInfo().ProjectID,
-                CustomerId = coreHelper.GetProjectInfo().CustomerID,
+                ProjectId = coreHelper.GetProjectInfo().ProjectId,
+                CustomerId = coreHelper.GetProjectInfo().CustomerId,
                 LevelName = levelName,
                 LevelIndex = levelIndex,
                 ProductType = Tag,
@@ -76,8 +78,8 @@
                 TrigerdTime = DateTime.Now
             };
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             dataModel, async (result) =>
             {
                 if (!result)

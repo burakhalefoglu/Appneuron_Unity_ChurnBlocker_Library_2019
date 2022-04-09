@@ -6,7 +6,7 @@ namespace AppneuronUnity.Core.Models.Concrete
 {
     internal class ProjectInfoModel
     {
-        public string CustomerID { get; set; }
-        public string ProjectID { get; set; }
+        public long CustomerId { get; set; }
+        public long ProjectId { get; set; }
     }
 }

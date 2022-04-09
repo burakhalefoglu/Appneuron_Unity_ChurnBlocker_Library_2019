@@ -7,6 +7,7 @@ using AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBehavi
 using AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBehavior.DataModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
 using Zenject;
 
 namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBehavior.DataManager
@@ -44,8 +45,8 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBe
             {
                 var dataModel = await _offerBehaviorDal.SelectAsync(fileName);
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -79,15 +80,15 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBe
             var isBought = isBuyOffer == true ? 1 : 0;
             OfferBehaviorModel dataModel = new OfferBehaviorModel
             {
-                ClientId = _clientIdUnityManager.GetPlayerID(),
-                ProjectId = coreHelper.GetProjectInfo().ProjectID,
-                CustomerId = coreHelper.GetProjectInfo().CustomerID,
+                ClientId = await _clientIdUnityManager.GetPlayerIdAsync(),
+                ProjectId = coreHelper.GetProjectInfo().ProjectId,
+                CustomerId = coreHelper.GetProjectInfo().CustomerId,
                 OfferId = OfferId,
                 IsBuyOffer = isBought
             };
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             dataModel, async (result) =>
             {
                     await CheckFileAndSendDataAsync();

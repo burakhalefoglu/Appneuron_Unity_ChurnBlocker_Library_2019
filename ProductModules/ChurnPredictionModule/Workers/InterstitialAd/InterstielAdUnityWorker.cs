@@ -31,8 +31,8 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers.Interstiti
 
         public async Task StartListen()
         {
-            await _remoteClient.SubscribeAsync<InterstitialAdEventModel>(_clientIdManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+            await _remoteClient.SubscribeAsync<InterstitialAdEventModel>(await _clientIdManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 (data) =>
                 {
                     Debug.Log(data.IsAdvSettingsActive);

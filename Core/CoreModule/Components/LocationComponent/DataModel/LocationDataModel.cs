@@ -5,9 +5,9 @@ namespace AppneuronUnity.Core.CoreModule.Components.LocationComponent.DataModel
 {
     internal class LocationDataModel: IEntity
     {
-        public string ClientId { get; set; }
-        public string ProjectId { get; set; }
-        public string CustomerId { get; set; }
+        public long ClientId { get; set; }
+        public long ProjectId { get; set; }
+        public long CustomerId { get; set; }
         public string Continent { get; set; }
         public string Country { get; set; }
         public string City { get; set; }

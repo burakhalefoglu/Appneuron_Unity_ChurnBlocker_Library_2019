@@ -1,4 +1,7 @@
-﻿namespace AppneuronUnity.Core.IoC.Zenject
+﻿using AppneuronUnity.Core.BaseServices.CryptoAdapter.Concrete.Effortless;
+using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.Core.IoC.Zenject
 {
     using AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp;
     using AppneuronUnity.Core.AuthModule.AuthComponent.DataAccess;
@@ -7,7 +10,6 @@
     using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataAccess.BinarySaving;
     using global::Zenject;
     using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-    using AppneuronUnity.Core.Adapters.CryptoAdapter.Concrete.Effortless;
     using AppneuronUnity.Core.Adapters.RestClientAdapter.Abstract;
     using AppneuronUnity.Core.Adapters.RestClientAdapter.Concrete.Unity;
     using AppneuronUnity.Core.CoreModule.Components.AdvDataComponent.DataAccess.BinarySaving;

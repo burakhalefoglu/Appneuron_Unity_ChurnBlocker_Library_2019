@@ -10,16 +10,27 @@
     internal class GameSessionEveryLoginDataModel : IEntity
     {
 
-        public string ClientId { get; set; }
+        public GameSessionEveryLoginDataModel()
+        {
+            CreatedAt = DateTime.Now;
+            Status = true;
+        }
 
-        public string ProjectId { get; set; }
+        public long ClientId { get; set; }
 
-        public string CustomerId { get; set; }
+        public long ProjectId { get; set; }
+
+        public long CustomerId { get; set; }
 
         public DateTime SessionStartTime { get; set; }
 
         public DateTime SessionFinishTime { get; set; }
 
-        public float SessionTimeMinute { get; set; }
+        public float SessionTime { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public bool Status { get; set; }
+
     }
 }

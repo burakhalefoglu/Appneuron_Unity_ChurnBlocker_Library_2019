@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataManager
+﻿using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.Core.CoreModule.Components.SessionDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System;
@@ -48,24 +50,24 @@
             DateTime levelBaseGameSessionFinish = levelBaseGameSessionStart.AddSeconds(sessionSeconds);
             float minutes = sessionSeconds / 60;
 
-            var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = coreHelper.GetProjectInfo().ProjectID;
-            var customerId = coreHelper.GetProjectInfo().CustomerID;
+            var playerId = await _clientIdUnityManager.GetPlayerIdAsync();
+            var projectId = coreHelper.GetProjectInfo().ProjectId;
+            var customerId = coreHelper.GetProjectInfo().CustomerId;
 
             LevelBaseSessionDataModel dataModel = new LevelBaseSessionDataModel
             {
                 ClientId = playerId,
                 ProjectId = projectId,
                 CustomerId = customerId,
-                levelName = levelName,
-                levelIndex = levelIndex,
+                LevelName = levelName,
+                LevelIndex = levelIndex,
                 SessionStartTime = levelBaseGameSessionStart,
                 SessionFinishTime = levelBaseGameSessionFinish,
                 SessionTimeMinute = minutes
             };
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -85,8 +87,8 @@
             {
                 var dataModel = await _levelBaseSessionDal.SelectAsync(fileName);
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -102,9 +104,9 @@
             DateTime sessionFinishTime,
             float minutes)
         {
-            var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = coreHelper.GetProjectInfo().ProjectID;
-            var customerId = coreHelper.GetProjectInfo().CustomerID;
+            var playerId = await _clientIdUnityManager.GetPlayerIdAsync();
+            var projectId = coreHelper.GetProjectInfo().ProjectId;
+            var customerId = coreHelper.GetProjectInfo().CustomerId;
 
             GameSessionEveryLoginDataModel dataModel = new GameSessionEveryLoginDataModel
             {
@@ -113,12 +115,12 @@
                 CustomerId = customerId,
                 SessionStartTime = sessionStartTime,
                 SessionFinishTime = sessionFinishTime,
-                SessionTimeMinute = minutes
+                SessionTime = minutes
             };
 
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -138,8 +140,8 @@
             {
                 var dataModel = await _gameSessionEveryLoginDal.SelectAsync(fileName);
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)

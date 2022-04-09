@@ -34,8 +34,8 @@ namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Workers.DifficultyRes
         public async Task StartListen()
         {
 
-            await _remoteClient.SubscribeAsync<DifficultyServerResultModel>(_clientIdManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+            await _remoteClient.SubscribeAsync<DifficultyServerResultModel>(await _clientIdManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 async (data) =>
                 {
                     Debug.Log(data.CenterOfDifficultyLevel);

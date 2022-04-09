@@ -7,7 +7,6 @@
     /// </summary>
     internal interface IClientIdUnityManager
     {
-        string GetPlayerID();
-        string GenerateId();
+        Task<long> GetPlayerIdAsync();
     }
 }

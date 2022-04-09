@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AppneuronUnity.Core.Adapters.WebsocketAdapter
+namespace AppneuronUnity.Core.BaseServices.WebsocketAdapter
 {
     internal interface IUnityClient
     {
-        Task PushAsync<T>(string userId, string projectId, T model, Action<bool> callback);
-        Task SubscribeAsync<T>(string userId, string projectId, Action<T> callback);
+        Task PushAsync<T>(long userId, long projectId, T model, Action<bool> callback);
+        Task SubscribeAsync<T>(long userId, long projectId, Action<T> callback);
 
     }
 }

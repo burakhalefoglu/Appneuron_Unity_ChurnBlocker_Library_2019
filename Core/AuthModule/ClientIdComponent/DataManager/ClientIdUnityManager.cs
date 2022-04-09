@@ -1,4 +1,10 @@
-﻿namespace AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataModel;
+using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
+using UnityEngine.iOS;
+
+namespace AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager
 {
     using UnityEngine;
     using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataAccess;
@@ -7,20 +13,32 @@
 
     internal class ClientIdUnityManager : IClientIdUnityManager
     {
-        [Inject]
-        private ICryptoServices _cryptoServices;
+        private readonly IClientIdDal _clientIdDal;
+        private readonly ICryptoServices _cryptoServices;
 
-        public ClientIdUnityManager(ICryptoServices cryptoServices)
+        [Inject]
+        private readonly CoreHelper coreHelper;
+
+        public ClientIdUnityManager(IClientIdDal clientIdDal, ICryptoServices cryptoServices)
         {
+            _clientIdDal = clientIdDal;
             _cryptoServices = cryptoServices;
         }
-        public string GetPlayerID()
+        public async Task<long> GetPlayerIdAsync()
         {
-            return SystemInfo.deviceUniqueIdentifier;
-        }
-        public string GenerateId()
-        {
-            return _cryptoServices.GetRandomHexNumber(32);
+            var folderNameList = coreHelper.GetSavedDataFilesNames<CustomerIdModel>();
+            if (folderNameList.Count == 0)
+            {
+                var fileName = _cryptoServices.GenerateStringName(6);
+                var clientId = _cryptoServices.GetRandomNumber();
+                await _clientIdDal.InsertAsync(fileName, new CustomerIdModel
+                {
+                    Id = clientId
+                });
+                return clientId;
+            }
+            var clientIdModel = await _clientIdDal.SelectAsync(folderNameList[0]);
+            return clientIdModel.Id;
         }
     }
 }

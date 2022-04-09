@@ -37,7 +37,7 @@ using AppneuronUnity.Core.CoreModule.Components.BuyingDataComponent.DataManager;
                  SceneManager.GetActiveScene().name,
                  SceneManager.GetActiveScene().buildIndex,
                     counterServices.LevelBaseGameTimer,
-                    _clientIdUnityManager.GetPlayerID());
+                    await _clientIdUnityManager.GetPlayerIdAsync());
             });
         }
     }

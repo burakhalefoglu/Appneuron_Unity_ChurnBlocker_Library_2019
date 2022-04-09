@@ -5,9 +5,9 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Components.OfferBe
     internal class OfferBehaviorModel
     {
          
-        public string ClientId { get; set; }
-        public string ProjectId { get; set; }
-        public string CustomerId { get; set; }
+        public long ClientId { get; set; }
+        public long ProjectId { get; set; }
+        public long CustomerId { get; set; }
         public int OfferId { get; set; }
         public string OfferName { get; set; }
 

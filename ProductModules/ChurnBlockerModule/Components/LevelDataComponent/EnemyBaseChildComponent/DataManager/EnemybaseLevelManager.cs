@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.DataManager
+﻿using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.DataAccess;
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Components.LevelDataComponent.EnemyBaseChildComponent.Datamodel;
@@ -78,9 +80,9 @@
             int levelIndex,
             Vector3 transform)
         {
-            var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = coreHelper.GetProjectInfo().ProjectID;
-            var customerId = coreHelper.GetProjectInfo().CustomerID;
+            var playerId = await _clientIdUnityManager.GetPlayerIdAsync();
+            var projectId = coreHelper.GetProjectInfo().ProjectId;
+            var customerId = coreHelper.GetProjectInfo().CustomerId;
 
             EnemyBaseWithLevelFailDataModel dataModel = new EnemyBaseWithLevelFailDataModel
             {
@@ -95,8 +97,8 @@
                 FailLocationZ = transform.z
             };
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -117,8 +119,8 @@
             {
                 var dataModel = await _enemyBaseWithLevelDieDal.SelectAsync(fileName);
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -138,9 +140,9 @@
             int isDead,
             int totalPowerUsage)
         {
-            var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = coreHelper.GetProjectInfo().ProjectID;
-            var customerId = coreHelper.GetProjectInfo().CustomerID;
+            var playerId = await _clientIdUnityManager.GetPlayerIdAsync();
+            var projectId = coreHelper.GetProjectInfo().ProjectId;
+            var customerId = coreHelper.GetProjectInfo().CustomerId;
 
             EnemyBaseEveryLoginLevelDatasModel dataModel = new EnemyBaseEveryLoginLevelDatasModel
             {
@@ -156,8 +158,8 @@
             };
 
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -178,8 +180,8 @@
             foreach (var fileName in FolderList)
             {
                 var dataModel = await _enemyBaseEveryLoginLevelDal.SelectAsync(fileName);
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)

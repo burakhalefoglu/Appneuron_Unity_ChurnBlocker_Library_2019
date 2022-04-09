@@ -9,13 +9,13 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
     internal class WebSocketBase
     {
         private WebSocketSharp webSocket;
-        private string userId { get; set; }
-        private string projectId { get; set; }
+        private long userId { get; set; }
+        private long projectId { get; set; }
         private string host { get; set; }
         private int port { get; set; }
 
-        public async Task<WebSocketSharp> ListenServerAsync<T>(string userId,
-           string projectId,
+        public async Task<WebSocketSharp> ListenServerAsync<T>(long userId,
+            long projectId,
            string websocketServer,
            int websocketPort)
         {
@@ -38,7 +38,7 @@ namespace AppneuronUnity.Core.ObjectBases.WebSocketHelper.WebsocketSharp
         }
 
 
-        private async Task<WebSocketSharp> SubscribeChannel<T>(string host, int port, string clientId, string projectId)
+        private async Task<WebSocketSharp> SubscribeChannel<T>(string host, int port, long clientId, long projectId)
         {
             return await Task.Run( async () =>
             {

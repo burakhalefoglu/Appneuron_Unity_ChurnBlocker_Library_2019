@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataManager
+﻿using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.Core.CoreModule.Components.HardwareIndormationComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Threading.Tasks;
@@ -27,9 +29,9 @@
         public async Task SendData()
         {
             var hardwareInformation = new HardwareInformationModel();
-            hardwareInformation.ClientId = _clientIdUnityManager.GetPlayerID();
-            hardwareInformation.ProjectId = coreHelper.GetProjectInfo().ProjectID;
-            hardwareInformation.CustomerId = coreHelper.GetProjectInfo().CustomerID;
+            hardwareInformation.ClientId =await _clientIdUnityManager.GetPlayerIdAsync();
+            hardwareInformation.ProjectId = coreHelper.GetProjectInfo().ProjectId;
+            hardwareInformation.CustomerId = coreHelper.GetProjectInfo().CustomerId;
             hardwareInformation.DeviceModel = SystemInfo.deviceModel;
             hardwareInformation.DeviceName = SystemInfo.deviceName;
             hardwareInformation.DeviceType = ((int)SystemInfo.deviceType);
@@ -43,8 +45,8 @@
             hardwareInformation.ProcessorType = SystemInfo.processorType;
             hardwareInformation.SystemMemorySize = SystemInfo.systemMemorySize;
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             hardwareInformation, (result) =>
             {
                 if (!result)

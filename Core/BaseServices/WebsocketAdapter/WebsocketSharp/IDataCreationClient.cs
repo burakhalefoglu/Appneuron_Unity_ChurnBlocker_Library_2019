@@ -1,6 +1,4 @@
-﻿using AppneuronUnity.Core.Adapters.WebsocketAdapter;
-
-namespace AppneuronUnity.Core.Adapters.WebsocketAdapter.WebsocketSharp
+﻿namespace AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp
 {
     interface IDataCreationClient: IUnityClient
     {

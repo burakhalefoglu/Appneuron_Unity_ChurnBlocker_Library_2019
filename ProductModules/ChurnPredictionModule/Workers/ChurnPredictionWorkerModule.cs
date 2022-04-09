@@ -18,7 +18,7 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
         private IRemoteClient remoteClient;
 
         [Inject]
-        private IClientIdUnityManager clientIdManager;
+        private IClientIdUnityManager _clientIdManager;
 
         [Inject]
         private IRestClientServices restApiClient;
@@ -53,8 +53,8 @@ namespace AppneuronUnity.ProductModules.ChurnPredictionModule.Workers
             await interstitialAdUnityWorker.StartListen();
             await remoteOfferUnityWorker.StartListen();
 
-            await remoteClient.SubscribeAsync<ChurnMlResultModel>(clientIdManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+            await remoteClient.SubscribeAsync<ChurnMlResultModel>(await _clientIdManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 (data) =>
                 {
                     Debug.Log(data.ThreeDayChurn);

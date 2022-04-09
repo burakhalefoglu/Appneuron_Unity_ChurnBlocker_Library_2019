@@ -1,10 +1,10 @@
-﻿namespace AppneuronUnity.Core.Adapters.CryptoAdapter.Concrete.Effortless
+﻿using System;
+using System.Linq;
+using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
+using AppneuronUnity.Core.Libraries.CryptoEffortless;
+using static AppneuronUnity.Core.Extension.RandomExtension;
+namespace AppneuronUnity.Core.BaseServices.CryptoAdapter.Concrete.Effortless
 {
-    using AppneuronUnity.Core.Libraries.CryptoEffortless;
-    using System;
-    using System.Linq;
-    using AppneuronUnity.Core.Adapters.CryptoAdapter.Absrtact;
-
     internal class EfforlessCryptoServices : ICryptoServices
     {
         byte[] key = Bytes.GenerateKey();
@@ -15,6 +15,12 @@
             string encrypted = StringHash.Encrypt(value, key, iv);
 
             return encrypted;
+        }
+
+        public long GetRandomNumber()
+        {
+            var randomGenerator = new Random();
+            return randomGenerator.NextLong(int.MaxValue, long.MaxValue);
         }
 
         public string EnCrypto(string encrypted)

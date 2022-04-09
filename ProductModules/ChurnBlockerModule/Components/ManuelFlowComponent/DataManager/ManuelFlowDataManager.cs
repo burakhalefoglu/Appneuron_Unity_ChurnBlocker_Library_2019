@@ -7,6 +7,7 @@ using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
 using Zenject;
 
 namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.ManuelFlowComponent.DataManager
@@ -44,8 +45,8 @@ namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.ManuelFlow
             {
                 var dataModel = await _manuelFlowDal.SelectAsync(fileName);
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -60,12 +61,12 @@ namespace AppneuronUnity.ProductModules.ChurnBlockerModule.Components.ManuelFlow
 
         public async Task SendManuelFlowData(ManuelFlowModel manuelFlowModel)
         {
-            manuelFlowModel.ClientId = _clientIdUnityManager.GetPlayerID();
-            manuelFlowModel.CustomerId = coreHelper.GetProjectInfo().CustomerID;
-            manuelFlowModel.ProjectId = coreHelper.GetProjectInfo().ProjectID;
+            manuelFlowModel.ClientId = await _clientIdUnityManager.GetPlayerIdAsync();
+            manuelFlowModel.CustomerId = coreHelper.GetProjectInfo().CustomerId;
+            manuelFlowModel.ProjectId = coreHelper.GetProjectInfo().ProjectId;
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             manuelFlowModel, async (result) =>
             {
 

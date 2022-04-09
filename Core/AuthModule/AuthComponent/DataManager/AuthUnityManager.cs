@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.Core.AuthModule.AuthComponent.DataManager
+﻿using AppneuronUnity.Core.AuthModule.ClientIdComponent.DataManager;
+
+namespace AppneuronUnity.Core.AuthModule.AuthComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System;
@@ -25,13 +27,20 @@
 
         internal IRestClientServices _restClientServices;
 
+        private readonly IClientIdUnityManager _clientIdUnityManager;
+
+
         [Inject]
         private readonly CoreHelper coreHelper;
 
-        public AuthUnityManager(IAuthDal authDal, IRestClientServices restClientServices)
+        public AuthUnityManager(IAuthDal authDal, IRestClientServices restClientServices,
+            IClientIdUnityManager clientIdUnityManager)
+
         {
             _authDal = authDal;
             _restClientServices = restClientServices;
+            _clientIdUnityManager = clientIdUnityManager;
+
         }
 
         public async Task Login()
@@ -46,12 +55,12 @@
                 return;
             }
 
-            string projectId = coreHelper.GetProjectInfo().ProjectID;
-            string customerId = coreHelper.GetProjectInfo().CustomerID;
+            var projectId = coreHelper.GetProjectInfo().ProjectId;
+            var customerId = coreHelper.GetProjectInfo().CustomerId;
 
             var JwtRequestModel = new AuthRequestModel
             {
-                ClientId = SystemInfo.deviceUniqueIdentifier,
+                ClientId = await _clientIdUnityManager.GetPlayerIdAsync(),
                 CustomerId = customerId,
                 ProjectId = projectId
             };

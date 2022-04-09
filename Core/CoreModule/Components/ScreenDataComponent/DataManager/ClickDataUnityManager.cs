@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager
+﻿using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.Core.CoreModule.Components.ScreenDataComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Collections.Generic;
@@ -87,8 +89,8 @@
             {
                 var dataModel = await _clickDataDal.SelectAsync(fileName);
 
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
@@ -120,14 +122,14 @@
                             clickDataModel.FinishLocY = r.LocY;
                             clickDataModel.CreatedAt = r.CreatedAt;
 
-                            clickDataModel.ClientId = _clientIdUnityManager.GetPlayerID();
-                            clickDataModel.ProjectId = coreHelper.GetProjectInfo().ProjectID;
-                            clickDataModel.CustomerId = coreHelper.GetProjectInfo().CustomerID;
+                            clickDataModel.ClientId = await _clientIdUnityManager.GetPlayerIdAsync();
+                            clickDataModel.ProjectId = coreHelper.GetProjectInfo().ProjectId;
+                            clickDataModel.CustomerId = coreHelper.GetProjectInfo().CustomerId;
                             clickDataModel.LevelName = SceneManager.GetActiveScene().name;
                             clickDataModel.LevelIndex = SceneManager.GetActiveScene().buildIndex;
 
-                            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                            coreHelper.GetProjectInfo().ProjectID,
+                            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                            coreHelper.GetProjectInfo().ProjectId,
                             clickDataModel, async (result) =>
                             {
                                 if (result)

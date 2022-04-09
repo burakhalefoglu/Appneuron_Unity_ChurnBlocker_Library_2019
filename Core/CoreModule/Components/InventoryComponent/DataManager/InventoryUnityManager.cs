@@ -1,4 +1,6 @@
-﻿namespace AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataManager
+﻿using AppneuronUnity.Core.BaseServices.WebsocketAdapter.WebsocketSharp;
+
+namespace AppneuronUnity.Core.CoreModule.Components.InventoryComponent.DataManager
 {
     using AppneuronUnity.ProductModules.ChurnBlockerModule.Configs;
     using System.Collections.Generic;
@@ -37,17 +39,17 @@
 
         public async Task SendData(InventoryDataModel ınventoryDataModel)
         {
-            var playerId = _clientIdUnityManager.GetPlayerID();
-            var projectId = coreHelper.GetProjectInfo().ProjectID;
-            var customerId = coreHelper.GetProjectInfo().CustomerID;
+            var playerId =await _clientIdUnityManager.GetPlayerIdAsync();
+            var projectId = coreHelper.GetProjectInfo().ProjectId;
+            var customerId = coreHelper.GetProjectInfo().CustomerId;
 
             InventoryDataModel dataModel = ınventoryDataModel;
             dataModel.ClientId = playerId;
             dataModel.CustomerId = customerId;
             dataModel.ProjectId = projectId;
 
-            await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-            coreHelper.GetProjectInfo().ProjectID,
+            await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+            coreHelper.GetProjectInfo().ProjectId,
             dataModel, async (result) =>
             {
                 if (!result)
@@ -66,8 +68,8 @@
             foreach (var fileName in FolderList)
             {
                 var dataModel = await _inventoryDal.SelectAsync(fileName);
-                await _dataCreationClient.PushAsync(_clientIdUnityManager.GetPlayerID(),
-                coreHelper.GetProjectInfo().ProjectID,
+                await _dataCreationClient.PushAsync(await _clientIdUnityManager.GetPlayerIdAsync(),
+                coreHelper.GetProjectInfo().ProjectId,
                 dataModel, async (result) =>
                 {
                     if (result)
